@@ -1,0 +1,127 @@
+@import 'tailwindcss';
+@import "../styles/variables.css";
+/* React Swiper Carousel Custom css */
+.heightFull,
+.heightFull .carouselWrapper,
+.heightFull .carouselWrapper > .swiper,
+.heightFull .carouselWrapper > .swiper > .swiper-wrapper,
+.heightFull .carouselWrapper > .swiper > .swiper-wrapper .swiper-slide > div,
+.heightFull .carouselWrapper > .swiper > .swiper-wrapper .swiper-slide > a,
+.heightFull
+.carouselWrapper
+> .swiper
+> .swiper-wrapper
+.swiper-slide
+> a
+> .group{
+    height: 100%;
+}
+
+.heightFull .carouselWrapper > .swiper > .swiper-wrapper .swiper-slide > a {
+    display: flex;
+}
+
+.swiper-wrapper .swiper-slide {
+    position: static;
+    height: auto;
+}
+
+.swiper .swiper-button-prev,
+.swiper .swiper-button-next {
+    display: none;
+}
+
+.carouselWrapper .swiper-button-disabled,
+#productGallery + div > .swiper-button-disabled {
+    cursor: not-allowed;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.carouselWrapper .swiper-button-disabled:hover,
+#productGallery + div > .swiper-button-disabled:hover {
+    color: inherit;
+    background-color: #666;
+}
+
+/*pagination-bullets*/
+.carouselWrapper  .swiper-pagination-bullets .swiper-pagination-bullet {
+    width: 24px;
+    height: 24px;
+    background:none;
+    @apply opacity-100 relative ;
+    &:before{
+        content: "";
+        position: absolute;
+        border: 1px solid #000;
+        inset: 0;
+        @apply  rounded-full m-auto transition-all opacity-0 scale-30;
+    }
+    &:after{
+        content: "";
+        position: absolute;
+        inset: 0;
+        @apply w-1.5 h-1.5 rounded-full m-auto transition-all opacity-40;
+
+    }
+
+    &:hover:after{
+        @apply opacity-100;
+    }
+}
+
+.carouselWrapper .swiper .swiper-pagination-bullets {
+    @apply bottom-3 md:bottom-7.5;
+}
+
+.carouselWrapper
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    opacity: 1;
+    &:before { @apply opacity-100 scale-100;}
+    &:after {@apply opacity-100;}
+}
+
+.carouselWrapper.dotsCircleBlack {
+    .swiper-pagination-bullet {
+        &:after{
+            @apply bg-brand-dark;
+        }
+        &.swiper-pagination-bullet-active{
+            &:before{
+                @apply border-brand-dark;
+            }
+        }
+
+    }
+}
+.carouselWrapper.dotsCircleWhite {
+    .swiper-pagination-bullet {
+        &:after{
+            @apply bg-brand-light;
+        }
+        &.swiper-pagination-bullet-active{
+            &:before{
+                @apply border-brand-light;
+            }
+        }
+    }
+}
+
+#productGalleryThumbs {
+    max-height: 680px;
+}
+
+#productGalleryThumbs .swiper-wrapper .swiper-slide {
+    /*height: auto !Important;*/
+    justify-content: center;
+    display: flex
+}
+
+#productGalleryThumbs .swiper-wrapper .swiper-slide-thumb-active {
+    @apply border-black;
+}
+
+
+.swiper-multirow-column > .swiper-wrapper {
+    flex-direction: row;
+}

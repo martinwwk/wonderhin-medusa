@@ -1,0 +1,79 @@
+@import 'tailwindcss';
+@import "../styles/variables.css";
+/*toolbar listing top*/
+.filters-panel {
+    .list-view {
+        display: inline-block;
+        .btn-gridview {
+            border: none;
+            float: left;
+            padding: 0.5em;
+        }
+
+        button.btn {
+            padding: 5px;
+            float: left;
+            width: 38px;
+            height: 38px;
+            justify-content: center;
+            align-items: center;
+            @apply border border-gray-200 ;
+            &.list{
+                @apply  rounded-e-sm rtl:rounded-e-none rtl:rounded-s-sm;
+            }
+            &.grid {
+                margin-right: -1px;
+                @apply  rounded-s-sm rtl:rounded-s-none rtl:rounded-e-sm;
+                .icon-bar {
+                    width: 4px;
+                }
+
+                .icon-bar:after, .icon-bar:before {
+                    position: absolute;
+                    display: block;
+                    width: 4px;
+                    height: 4px;
+                    content: '';
+                    transition: all .15s ease;
+                    @apply bg-gray-300;
+                }
+
+                .icon-bar:after {
+                    left: -5px;
+                }
+
+                .icon-bar:before {
+                    right: -5px;
+                }
+            }
+
+            .icon-bar {
+                position: relative;
+                top: -1px;
+                width: 14px;
+                height: 4px;
+                margin: 1px auto 0;
+                transition: all .15s ease;
+                @apply bg-gray-300;
+            }
+
+            /* Hover Grid view*/
+
+            &.active {
+                .icon-bar {
+                    @apply bg-brand-dark;
+                }
+
+                .icon-bar:after, .icon-bar:before {
+                    @apply bg-brand-dark;
+                }
+            }
+
+            &:focus {
+                box-shadow: none;
+                outline: none;
+            }
+        }
+    }
+
+}

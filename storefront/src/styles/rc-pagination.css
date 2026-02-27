@@ -1,0 +1,107 @@
+@import 'tailwindcss';
+@import "../styles/variables.css";
+/* pagination */
+.rc-pagination-prev, .rc-pagination-next {
+    align-items: center;
+    justify-items: center;
+    display: flex !important;
+
+    svg {
+        margin: auto;
+    }
+}
+
+.rc-pagination.blog-pagination {
+    @apply mt-7;
+}
+
+.rc-pagination.blog-pagination .rc-pagination-prev,
+.rc-pagination.blog-pagination .rc-pagination-next,
+.rc-pagination.blog-pagination .rc-pagination-item {
+    height: 40px;
+    width: 40px;
+    padding: 6px 5px;
+    background-color: #f2f3f4;
+    border-radius: 40px;
+    border: none;
+    font-weight: 600;
+    margin-right: 10px;
+
+    &:hover {
+        @apply bg-gray-900 hover:text-white;
+        a {
+            @apply text-white;
+        }
+    }
+}
+
+.rc-pagination.blog-pagination li.rc-pagination-disabled {
+    opacity: 0.5;
+
+}
+
+.rc-pagination.blog-pagination li.rc-pagination-item-active {
+    @apply bg-gray-900 ;
+
+}
+
+.rc-pagination.blog-pagination li svg {
+    width: 100%;
+}
+
+.rc-pagination.blog-pagination li.rc-pagination-item-active a {
+    opacity: 1;
+    @apply text-white;
+}
+
+.rc-pagination.blog-pagination li a {
+    padding: 0;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.rc-pagination.order-table-pagination {
+    align-items: center;
+    justify-items: center;
+}
+
+.rc-pagination.order-table-pagination .rc-pagination-prev,
+.rc-pagination.order-table-pagination .rc-pagination-next {
+    height: 30px;
+    width: 30px;
+    padding: 8px 5px;
+    background-color: #f3f6f9;
+    border-radius: 3px;
+}
+
+.rc-pagination.order-table-pagination .rc-pagination-prev {
+    margin-right: 15px;
+}
+
+.rc-pagination.order-table-pagination .rc-pagination-next {
+    margin-left: 15px;
+}
+
+.rc-pagination.order-table-pagination li.rc-pagination-disabled {
+    opacity: 0.3;
+}
+
+.rc-pagination.order-table-pagination li {
+    height: auto;
+    min-width: auto;
+    border: 0;
+    border-radius: 0;
+}
+
+.rc-pagination.order-table-pagination li svg {
+    width: 100%;
+}
+
+.rc-pagination.order-table-pagination li.rc-pagination-item-active a {
+    opacity: 1;
+}
+
+.rc-pagination.order-table-pagination li a {
+    padding: 0;
+    color: rgba(0, 0, 0, 1);
+    opacity: 0.7;
+}

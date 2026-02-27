@@ -1,0 +1,75 @@
+@import 'tailwindcss';
+@import "../styles/variables.css";
+
+/* Header Menu */
+.header-four {
+    .subMega {
+        top: calc(100% + 1px);
+    }
+    .subMenu {
+        top: calc(100% + 1px);
+    }
+}
+.subMenu {
+    top: calc(100% + 7px);
+    li:hover > .subMenuChild {
+        @apply visible opacity-100 -top-3;
+    }
+}
+
+.category-dropdown-menu li {
+    div.subMenu--level1,
+    div.subMenu--level2,
+    div.subMenu--level3 {
+        top: -13px;
+    }
+
+    > div.dropdownMenu {
+        @apply ltr:left-[85%] rtl:right-[85%];
+        li > a {
+            padding: 8px 0;
+        }
+    }
+}
+
+.category-dropdown-menu li:hover > div.dropdownMenu {
+    @apply ltr:left-[100%] rtl:right-[100%];
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease-out, all 0.1s ease-in-out;
+}
+/* for header  */
+
+
+/* Mobile Drawer Menu */
+.mobile-menu > li > div > a {
+    @apply text-15px py-3 font-medium;
+}
+
+.mobile-menu li li {
+    @apply text-sm;
+}
+
+.mobile-menu li li div > a {
+    @apply relative py-2.5 opacity-90;
+}
+
+.mobile-menu li > ul > li > div > a:before {
+    content: '';
+    height: 1px;
+    @apply flex absolute top-1/2 start-1 rtl:right-1 md:ltr:left-3 md:rtl:right-3 w-[7px] bg-brand-dark;
+}
+
+/* For login and signup switch */
+
+
+/* sticky site header styles */
+@media (min-width: 1024px) {
+    .sticky-header.is-scrolling .header-sticky {
+        @apply fixed  top-0 z-30 w-full drop-shadow-header ;
+        animation: fadeInSticky .5s cubic-bezier(.22,.61,.36,1) 0s ;
+        transition: top .35s ease-in-out;
+    }
+}
+
+

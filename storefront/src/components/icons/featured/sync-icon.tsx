@@ -1,0 +1,25 @@
+import cn from "classnames";
+import {IconType} from "@/types/template";
+
+const SyncIcon: React.FC<IconType> = ({
+  color = 'currentColor',
+  width = '28',
+  height = '28',
+  className = '',
+}) => {
+  return (
+    <svg
+      height={height}
+      width={width}
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(className,color)}
+    >
+      <path d="m10.5 15 3 3 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+      <path d="M13.4 3c.9-.7 2.3-.7 3.2 0l2 1.8q.6.5 1.5.6h2.2c1.3 0 2.4 1 2.4 2.4v2q0 1 .6 1.7l1.7 2c.7.8.7 2.2 0 3l-1.7 2q-.6.7-.6 1.6v2.2c0 1.3-1.1 2.4-2.4 2.4H20c-.4 0-1.2.2-1.5.6l-2 1.7c-.9.7-2.3.7-3.2 0l-2-1.7q-.6-.6-1.5-.6H7.7a2.4 2.4 0 0 1-2.4-2.4V20q0-.9-.6-1.5l-1.6-2c-.8-.9-.8-2.3 0-3.2l1.6-2q.6-.6.6-1.5v-2c0-1.4 1.1-2.5 2.4-2.5H10q.9 0 1.6-.5z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+    </svg>
+  );
+};
+
+export default SyncIcon;

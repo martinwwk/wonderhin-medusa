@@ -1,0 +1,28 @@
+{
+  "id": 1,
+  "tracking_number": "EGQ12537",
+  "customer": {
+    "id": 1,
+    "email": "yourexample@email.com"
+  },
+  "total": 1400,
+  "shipping_fee": 20,
+  "tax": 0,
+  "products": [
+    {
+      "id": 1,
+      "name": "Basic Bright Green Rib Extreme Crop Top",
+      "image":"/assets/images/products/p-1.jpg",
+      "quantity": 1,
+      "price": 790
+    },
+    {
+      "id": 2,
+      "name": "Short Sleeve Round Neck Sweater",
+      "image":"/assets/images/products/p-2.jpg",
+      "quantity": 1,
+      "price": 610
+    }
+  ],
+  "note": "new order"
+}

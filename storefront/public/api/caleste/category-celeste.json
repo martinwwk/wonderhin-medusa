@@ -1,0 +1,82 @@
+[
+    {
+      "id": 1,
+      "name": "Best Sellers",
+      "slug": "best—sellers",
+      "type": "mega",
+      "productCount": "125",
+      "image": {
+        "id": 1,
+        "thumbnail": "/assets/images/collection/home6/celeste-cate-6.png",
+        "original": "/assets/images/categories/img_3.jpg"
+
+      }
+    },
+    {
+      "id": 2,
+      "name": "Earring",
+      "slug": "earring",
+      "type": "mega",
+      "productCount": "255",
+      "image": {
+        "id": 1,
+        "thumbnail": "/assets/images/collection/home6/celeste-cate-4.png",
+        "original": "/assets/images/categories/img_4.jpg"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Necklaces",
+      "slug": "necklaces",
+      "productCount": "250",
+      "image": {
+        "id": 1,
+        "thumbnail": "/assets/images/collection/home6/celeste-cate-1.png",
+        "original": "/assets/images/categories/img_5.jpg"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Bracelets",
+      "slug": "bracelets",
+      "productCount": "120",
+      "image": {
+        "id": 1,
+        "thumbnail": "/assets/images/collection/home6/celeste-cate-3.png",
+        "original": "/assets/images/categories/img_6.jpg"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Weddings",
+      "slug": "weddings",
+      "productCount": "250",
+      "image": {
+        "id": 1,
+        "thumbnail": "/assets/images/collection/home6/celeste-cate-5.png",
+        "original": "/assets/images/categories/img_7.jpg"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Blazers",
+      "slug": "blazers",
+      "productCount": "450",
+      "image": {
+        "id": 1,
+        "thumbnail": "/assets/images/collection/home6/celeste-cate-2.png",
+        "original": "/assets/images/categories/img_8.jpg"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Demin",
+      "slug": "demin",
+      "productCount": "320",
+      "image": {
+        "id": 1,
+        "thumbnail": "/assets/images/collection/home6/celeste-cate-6.png",
+        "original": "/assets/images/categories/img_9.jpg"
+      }
+    }
+]

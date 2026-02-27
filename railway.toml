@@ -1,0 +1,16 @@
+[build]
+  builder = "NIXPACKS"
+
+[[services]]
+name = "backend"
+rootDir = "backend"
+startCommand = "yarn start"
+
+  [services.variables]
+    DATABASE_URL = "..."
+    REDIS_URL = "..."
+
+[[services]]
+name = "storefront"
+rootDir = "storefront"
+startCommand = "yarn start"

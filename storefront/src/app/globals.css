@@ -1,0 +1,12 @@
+@custom-variant dark (&:where(.dark, .dark *));
+/* styles/globals.css */
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+
+/* Your custom styles can follow here */
+@import "../styles/themes.css";
+@import "../styles/variables.css";
+@import "../styles/store.css";
+
+
+

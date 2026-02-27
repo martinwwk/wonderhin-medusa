@@ -1,0 +1,52 @@
+# --- 依赖与系统文件 (最占 Token) ---
+node_modules/
+.npm/
+.pnpm-store/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# --- Next.js 相关 (缓存和构建产物) ---
+.next/
+out/
+build/
+.vercel/
+*.tsbuildinfo
+
+# --- NestJS 相关 ---
+dist/
+artifacts/
+*.log
+repl.history
+
+# --- 数据库与容器 (严禁 AI 读取大型二进制或日志) ---
+.docker/
+postgres-data/
+mongo-data/
+*.sql
+*.dump
+*.seed
+
+# --- 静态资源 (AI 看不懂且极占空间) ---
+public/assets/
+public/images/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.mp4
+*.pdf
+
+# --- 环境与密钥 (安全风险) ---
+.env*
+*.pem
+*.key
+.ssh/
+
+# --- 临时文件与测试覆盖率 ---
+coverage/
+.nyc_output/
+.tmp/
+temp/

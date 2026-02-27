@@ -1,0 +1,169 @@
+import { TableRC} from '@/components/shared/table-rc';
+import Input from '@/components/shared/form/input';
+import React, { useState } from 'react';
+import Pagination from '@/components/shared/pagination';
+import ActionsButton from '@/components/shared/action-button';
+import { TotalPrice } from '@/components/orders/price';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import timezone from 'dayjs/plugin/timezone';
+import { GrNext, GrPrevious } from 'react-icons/gr';
+import { BsSearch } from 'react-icons/bs';
+import {Order} from "@/types/template";
+import "@/styles/order.css";
+import { useI18n } from '@lib/hooks/use-i18n';
+
+export const CreatedAt: React.FC<{ createdAt?: string }> = ({ createdAt }) => {
+  dayjs.extend(relativeTime);
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
+  return (
+    <span className="whitespace-nowrap">
+      {dayjs.utc(createdAt).tz(dayjs.tz.guess()).fromNow()}
+    </span>
+  );
+};
+
+export const Status: React.FC<{ item?: Order }> = ({ item }) => {
+  return (
+    <span className={item?.status?.name?.replace(/\s/g, '_').toLowerCase()}>
+      <span
+        className="bullet"
+        style={{ backgroundColor: item?.status?.color }}
+      />
+      {item?.status?.name}
+    </span>
+  );
+};
+
+const OrderTable: React.FC<{ orders?: Order[] }> = ({ orders = [] }) => {
+  const { t } = useI18n();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [value, setValue] = useState('');
+  const countPerPage = 5;
+  const [filterData, setDataValue] = useState<Order[]>(orders.slice(0, countPerPage));
+
+  const columns = [
+    {
+      title: t('orderNumberColumn'),
+      dataIndex: 'tracking_number',
+      key: 'tracking_number',
+      className: 'id-cell',
+      width: 140,
+    },
+   
+    {
+      title: t('status'),
+      key: 'status',
+      width: 145,
+      render: function status(item: Order) {
+        return <Status item={item} />;
+      },
+    },
+    {
+      title: t('orderDate'),
+      dataIndex: 'created_at',
+      key: 'created_at',
+      width: 140,
+      render: function createdAt(created_at: string) {
+        return <CreatedAt createdAt={created_at} />;
+      },
+    },
+    {
+      title: t('deliveryTime'),
+      dataIndex: 'delivery_time',
+      key: 'delivery_time',
+      width: 140,
+    },
+    {
+      title: t('totalPrice'),
+      key: 'total',
+      width: 130,
+      render: function totalPrice(items: Order) {
+        return <TotalPrice items={items} />;
+      },
+    },
+    {
+      dataIndex: '',
+      key: 'operations',
+      width: 80,
+      render: function actionsButton(item: Order) {
+        return <ActionsButton item={item} />;
+      },
+      className: 'operations-cell',
+    },
+  ];
+
+  const updatePage = (p: number) => {
+    setCurrentPage(p);
+    const to = countPerPage * p;
+    const from = to - countPerPage;
+    setDataValue(orders.slice(from, to));
+  };
+
+  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentPage(1);
+    const filter: Order[] = orders
+      .filter((item: Order) =>
+        item.tracking_number
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase()),
+      )
+      .slice(0, countPerPage);
+    setValue(e.target.value);
+    if (!e.target.value) {
+      updatePage(1);
+    }
+    setDataValue(filter);
+  };
+  const onSubmitHandle = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
+  return (
+    <>
+      <div className="items-center mb-5 md:flex md:justify-between sm:mb-7">
+        <h2 className="mb-4 text-sm font-semibold md:text-xl text-brand-dark md:mb-0">
+          {t('orderHistory')}
+        </h2>
+        <form onSubmit={onSubmitHandle} className="relative hidden">
+          <span className="absolute ltr:right-3 rtl:left-3 top-[80%] transform -translate-y-1/2 order-icon-color">
+            <BsSearch size={19} />
+          </span>
+          <Input
+            name="search"
+            type="search"
+            value={value}
+            onChange={onChangeSearch}
+            placeholder={t('searchOrderList')}
+            inputClassName="  w-full bg-white border border-[#E3E8EC] rounded order-search focus:border-1 focus:outline-none focus:border-brand-dark focus:text-brand-muted"
+          />
+        </form>
+      </div>
+      <div className="order-list-table-wraper">
+        <TableRC
+          className="order-list-table"
+          columns={columns}
+          data={filterData}
+          rowKey="id"
+        />
+      </div>
+      {!value.trim() && (
+        <div className="mt-5 ltr:text-right rtl:text-left">
+          <Pagination
+            current={currentPage}
+            onChange={updatePage}
+            pageSize={countPerPage}
+            total={orders?.length}
+            prevIcon={<GrPrevious size={12} style={{ color: '#333' }} />}
+            nextIcon={<GrNext size={12} style={{ color: '#333' }} />}
+            className="order-table-pagination"
+          />
+        </div>
+      )}
+    </>
+  );
+};
+
+export default OrderTable;

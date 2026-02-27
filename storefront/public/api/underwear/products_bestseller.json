@@ -1,0 +1,361 @@
+[
+  {
+    "id": "pbs1",
+    "name": "Modern Mesh High Brief",
+    "slug": "modern-mesh-high-brief",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattes squelchier nil, a aliquot orc fugitive paribus. stream at pulmonary deque.",
+    "image": {
+      "id": 1,
+      "thumbnail": "/assets/images/products/underwear/lingerie_products_women_1_1.jpg",
+      "original": "/assets/images/products/underwear/lingerie_products_women_1_1.jpg"
+    },
+    "gallery": [
+      {
+        "id": 1,
+        "thumbnail": "/assets/images/products/underwear/lingerie_products_women_1_2.jpg",
+        "original": "/assets/images/products/underwear/lingerie_products_women_1_2.jpg"
+      },
+      {
+        "id": 2,
+        "thumbnail": "/assets/images/products/p-3-2.jpg",
+        "original": "/assets/images/products/p-3-2.jpg"
+      },
+      {
+        "id": 3,
+        "thumbnail": "/assets/images/products/p-3-3.jpg",
+        "original": "/assets/images/products/p-3-3.jpg"
+      }
+    ],
+    "isFeatured": true,
+    "rating": 4,
+    "discountPercentage": 2,
+    "quantity": 270,
+    "price": 90,
+    "sale_price": 65.6,
+    "unit": "Nun feugiat",
+    "tag": [
+      {
+        "id": 1,
+        "name": "Fresh food",
+        "slug": "fresh-food"
+      },
+      {
+        "id": 2,
+        "name": "Organic",
+        "slug": "organic"
+      },
+      {
+        "id": 3,
+        "name": "Cilantro",
+        "slug": "cilantro"
+      },
+      {
+        "id": 4,
+        "name": "Dry Food",
+        "slug": "dry-food"
+      }
+    ]
+  },
+  {
+    "id": "pbs2",
+    "name": "Seamless Nursing Bra",
+    "slug": "seamless-nursing-bra",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis scelerisque nisl, a aliquet orci feugiat dapibus. Etiam at pulvinar neque",
+    "image": {
+      "id": 1,
+      "thumbnail": "/assets/images/products/underwear/lingerie_products_women_2_1.jpg",
+      "original": "/assets/images/products/underwear/lingerie_products_women_2_1.jpg"
+    },
+    "gallery": [
+      {
+        "id": 1,
+        "thumbnail": "/assets/images/products/underwear/lingerie_products_women_2_2.jpg",
+        "original": "/assets/images/products/underwear/lingerie_products_women_2_2.jpg"
+      }
+
+    ],
+    "isFeatured": false,
+    "rating": 4.5,
+    "discountPercentage": 2,
+    "quantity": 70,
+    "price": null,
+    "sale_price": null,
+    "unit": "Nunc feugiat ",
+    "tag": [
+      {
+        "id": 1,
+        "name": "Fresh food",
+        "slug": "fresh-food"
+      },
+      {
+        "id": 2,
+        "name": "Organic",
+        "slug": "organic"
+      },
+      {
+        "id": 3,
+        "name": "Cilantro",
+        "slug": "cilantro"
+      },
+      {
+        "id": 4,
+        "name": "Dry Food",
+        "slug": "dry-food"
+      }
+    ],
+    "product_type": "variable",
+    "max_price": 650,
+    "min_price": 500,
+    "variations": [
+      {
+        "id": 1,
+        "attribute_id": 1,
+        "value": "Pink",
+        "attribute": {
+          "id": 1,
+          "slug": "color",
+          "name": "Color",
+          "type": "rectangleColor",
+          "values": [
+            {"id": 1, "attribute_id": 1, "value": "Pink","image": "/assets/images/products/p-3.jpg"},
+            {"id": 2, "attribute_id": 1, "value": "Black","image": "/assets/images/products/p-3-1.jpg"},
+            {"id": 3, "attribute_id": 1, "value": "White","image": "/assets/images/products/p-3-2.jpg"},
+            {"id": 4, "attribute_id": 1, "value": "Blue","image": "/assets/images/products/p-3-3.jpg"}
+          ]
+        }
+      },
+      {
+        "id": 2,
+        "attribute_id": 2,
+        "value": "128GB",
+        "attribute": {
+          "id": 2,
+          "slug": "memory-storage",
+          "name": "Memory Storage",
+          "type": "rectangle",
+          "values": [
+            {"id": 2, "attribute_id": 2, "value": "128GB"},
+            {"id": 3, "attribute_id": 2, "value": "256GB"},
+            {"id": 4, "attribute_id": 2, "value": "512GB"}
+          ]
+        }
+      }
+    ],
+    "variation_options": [
+      {"id": 1, "title": "128GB - Pink", "price": 550, "quantity": 8, "sku": "200101-Pink", "is_disable": 0, "image": "/assets/images/products/p-3.jpg", "options": [{"name": "memory-storage", "value": "128GB"}, {"name": "color", "value": "Pink"}]},
+      {"id": 2, "title": "128GB - Black", "price": 550, "quantity": 8, "sku": "200101-BLACK", "is_disable": 0, "image": "/assets/images/products/p-3-1.jpg", "options": [{"name": "memory-storage", "value": "128GB"}, {"name": "color", "value": "Black"}]},
+      {"id": 3, "title": "128GB - White", "price": 550, "quantity": 8, "sku": "200101-WHITE", "is_disable": 0, "image": "/assets/images/products/p-3-2.jpg", "options": [{"name": "memory-storage", "value": "128GB"}, {"name": "color", "value": "White"}]},
+      {"id": 4, "title": "128GB - Blue", "price": 550, "quantity": 8, "sku": "200101-BLUE", "is_disable": 0, "image": "/assets/images/products/p-3-3.jpg", "options": [{"name": "memory-storage", "value": "128GB"}, {"name": "color", "value": "Blue"}]},
+
+      {"id": 5, "title": "256GB - Pink", "price": 600, "quantity": 12, "sku": "200102-Pink", "is_disable": 0, "image": "/assets/images/products/p-3.jpg", "options": [{"name": "memory-storage", "value": "256GB"}, {"name": "color", "value": "Pink"}]},
+      {"id": 6, "title": "256GB - Black", "price": 600, "quantity": 12, "sku": "200102-BLACK", "is_disable": 0, "image": "/assets/images/products/p-3-1.jpg", "options": [{"name": "memory-storage", "value": "256GB"}, {"name": "color", "value": "Black"}]},
+      {"id": 7, "title": "256GB - White", "price": 600, "quantity": 12, "sku": "200102-WHITE", "is_disable": 0, "image": "/assets/images/products/p-3-2.jpg", "options": [{"name": "memory-storage", "value": "256GB"}, {"name": "color", "value": "White"}]},
+      {"id": 8, "title": "256GB - Blue", "price": 600, "quantity": 12, "sku": "200102-BLUE", "is_disable": 0, "image": "/assets/images/products/p-3-3.jpg", "options": [{"name": "memory-storage", "value": "256GB"}, {"name": "color", "value": "Blue"}]},
+
+      {"id": 9, "title": "512GB - Pink", "price": 650, "quantity": 15, "sku": "200103-Pink", "is_disable": 0, "image": "/assets/images/products/p-3.jpg", "options": [{"name": "memory-storage", "value": "512GB"}, {"name": "color", "value": "Pink"}]},
+      {"id": 10, "title": "512GB - Black", "price": 650, "quantity": 15, "sku": "200103-BLACK", "is_disable": 0, "image": "/assets/images/products/p-3-1.jpg", "options": [{"name": "memory-storage", "value": "512GB"}, {"name": "color", "value": "Black"}]},
+      {"id": 11, "title": "512GB - White", "price": 650, "quantity": 15, "sku": "200103-WHITE", "is_disable": 0, "image": "/assets/images/products/p-3-2.jpg", "options": [{"name": "memory-storage", "value": "512GB"}, {"name": "color", "value": "White"}]},
+      {"id": 12, "title": "512GB - Blue", "price": 650, "quantity": 15, "sku": "200103-BLUE", "is_disable": 0, "image": "/assets/images/products/p-3-3.jpg", "options": [{"name": "memory-storage", "value": "512GB"}, {"name": "color", "value": "Blue"}]}
+
+    ]
+  },
+  {
+    "id": "pbs3",
+    "name": "Shadow Stripe Mid-Rise Brief",
+    "slug": "shadow-stripe-mid-rise-brief",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis scelerisque nisl, a aliquet orci feugiat dapibus. Etiam at pulvinar neque",
+    "image": {
+      "id": 1,
+      "thumbnail": "/assets/images/products/underwear/lingerie_products_women_3_1.jpg",
+      "original": "/assets/images/products/underwear/lingerie_products_women_3_1.jpg"
+    },
+    "gallery": [
+      {
+        "id": 1,
+        "thumbnail": "/assets/images/products/underwear/lingerie_products_women_3_2.jpg",
+        "original": "/assets/images/products/underwear/lingerie_products_women_3_2.jpg"
+      }
+    ],
+    "isFeatured": true,
+    "rating": 4.5,
+    "discountPercentage": 2,
+    "quantity": 270,
+    "price": 90,
+    "sale_price": 870,
+    "unit": "Nunc feugiat"
+  },
+  {
+    "id": "pbs4",
+    "name": "High Waist Swimsuit",
+    "slug": "high-waist-swimsuit",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis scelerisque nisl, a aliquet orci feugiat dapibus. Etiam at pulvinar neque.",
+    "image": {
+      "id": 1,
+      "thumbnail": "/assets/images/products/underwear/lingerie_products_women_4_1.jpg",
+      "original": "/assets/images/products/underwear/lingerie_products_women_4_1.jpg"
+    },
+    "gallery": [
+      {
+        "id": 1,
+        "thumbnail": "/assets/images/products/underwear/lingerie_products_women_4_2.jpg",
+        "original": "/assets/images/products/underwear/lingerie_products_women_4_2.jpg"
+      }
+    ],
+    "isFeatured": true,
+    "rating": 4.5,
+    "discountPercentage": 2,
+    "quantity": 270,
+    "price": 850,
+    "sale_price": 550,
+    "unit": "Nunc feugiat"
+  },
+  {
+    "id": "pbs5",
+    "name": "Ankle Loop Open Toe Flats",
+    "slug": "ankle-loop-open-toe-flats",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis scelerisque nisl, a aliquet orci feugiat dapibus. Etiam at pulvinar neque",
+    "image": {
+      "id": 1,
+      "thumbnail": "/assets/images/products/underwear/lingerie_products_women_5_1.jpg",
+      "original": "/assets/images/products/underwear/lingerie_products_women_5_1.jpg"
+    },
+    "gallery": [
+      {
+        "id": 1,
+        "thumbnail": "/assets/images/products/underwear/lingerie_products_women_5_2.jpg",
+        "original": "/assets/images/products/underwear/lingerie_products_women_5_2.jpg"
+      }
+    ],
+    "isFeatured": true,
+    "rating": 4.5,
+    "discountPercentage": 2,
+    "quantity": 70,
+    "price": 1300,
+    "sale_price": 900,
+    "unit": "Nunc feugiat",
+    "tag": [
+      {
+        "id": 1,
+        "name": "Fresh food",
+        "slug": "fresh-food"
+      },
+      {
+        "id": 2,
+        "name": "Organic",
+        "slug": "organic"
+      },
+      {
+        "id": 3,
+        "name": "Cilantro",
+        "slug": "cilantro"
+      },
+      {
+        "id": 4,
+        "name": "Dry Food",
+        "slug": "dry-food"
+      }
+    ]
+  },
+  {
+    "id": "pbs6",
+    "name": "Slim Fit Basic Unpatterned T-shirt",
+    "slug": "slim-fit-basic-unpatterned-t-shirt",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis scelerisque nisl, a aliquet orci feugiat dapibus. Etiam at pulvinar neque",
+    "image": {
+      "id": 1,
+      "thumbnail": "/assets/images/products/underwear/lingerie_products_women_6_1.jpg",
+      "original": "/assets/images/products/underwear/lingerie_products_women_6_1.jpg"
+    },
+    "gallery": [
+      {
+        "id": 1,
+        "thumbnail": "/assets/images/products/underwear/lingerie_products_women_6_2.jpg",
+        "original": "/assets/images/products/underwear/lingerie_products_women_6_2.jpg"
+      }
+    ],
+    "isFeatured": false,
+    "rating": 4.5,
+    "discountPercentage": 2,
+    "quantity": 70,
+    "price": null,
+    "sale_price": null,
+    "unit": "Common Good",
+    "tag": [
+      {
+        "id": 1,
+        "name": "Fresh food",
+        "slug": "fresh-food"
+      },
+      {
+        "id": 2,
+        "name": "Organic",
+        "slug": "organic"
+      },
+      {
+        "id": 3,
+        "name": "Fruits",
+        "slug": "fruits"
+      },
+      {
+        "id": 4,
+        "name": "Dry Food",
+        "slug": "dry-food"
+      }
+    ],
+    "product_type": "variable",
+    "max_price": 650,
+    "min_price": 550,
+    "variations": [
+      {
+        "id": 1,
+        "attribute_id": 1,
+        "value": "Pink",
+        "attribute": {
+          "id": 1,
+          "slug": "color",
+          "name": "Color",
+          "type": "rectangleColor",
+          "values": [
+            {"id": 1, "attribute_id": 1, "value": "Pink","image": "/assets/images/products/p-3.jpg"},
+            {"id": 2, "attribute_id": 1, "value": "Black","image": "/assets/images/products/p-3-1.jpg"},
+            {"id": 3, "attribute_id": 1, "value": "White","image": "/assets/images/products/p-3-2.jpg"},
+            {"id": 4, "attribute_id": 1, "value": "Blue","image": "/assets/images/products/p-3-3.jpg"}
+          ]
+        }
+      },
+      {
+        "id": 2,
+        "attribute_id": 2,
+        "value": "128GB",
+        "attribute": {
+          "id": 2,
+          "slug": "memory-storage",
+          "name": "Memory Storage",
+          "type": "rectangle",
+          "values": [
+            {"id": 2, "attribute_id": 2, "value": "128GB"},
+            {"id": 3, "attribute_id": 2, "value": "256GB"},
+            {"id": 4, "attribute_id": 2, "value": "512GB"}
+          ]
+        }
+      }
+    ],
+    "variation_options": [
+      {"id": 1, "title": "128GB - Pink", "price": 550, "quantity": 8, "sku": "200101-Pink", "is_disable": 0, "image": "/assets/images/products/p-3.jpg", "options": [{"name": "memory-storage", "value": "128GB"}, {"name": "color", "value": "Pink"}]},
+      {"id": 2, "title": "128GB - Black", "price": 550, "quantity": 8, "sku": "200101-BLACK", "is_disable": 0, "image": "/assets/images/products/p-3-1.jpg", "options": [{"name": "memory-storage", "value": "128GB"}, {"name": "color", "value": "Black"}]},
+      {"id": 3, "title": "128GB - White", "price": 550, "quantity": 8, "sku": "200101-WHITE", "is_disable": 0, "image": "/assets/images/products/p-3-2.jpg", "options": [{"name": "memory-storage", "value": "128GB"}, {"name": "color", "value": "White"}]},
+      {"id": 4, "title": "128GB - Blue", "price": 550, "quantity": 8, "sku": "200101-BLUE", "is_disable": 0, "image": "/assets/images/products/p-3-3.jpg", "options": [{"name": "memory-storage", "value": "128GB"}, {"name": "color", "value": "Blue"}]},
+
+      {"id": 5, "title": "256GB - Pink", "price": 600, "quantity": 12, "sku": "200102-Pink", "is_disable": 0, "image": "/assets/images/products/p-3.jpg", "options": [{"name": "memory-storage", "value": "256GB"}, {"name": "color", "value": "Pink"}]},
+      {"id": 6, "title": "256GB - Black", "price": 600, "quantity": 12, "sku": "200102-BLACK", "is_disable": 0, "image": "/assets/images/products/p-3-1.jpg", "options": [{"name": "memory-storage", "value": "256GB"}, {"name": "color", "value": "Black"}]},
+      {"id": 7, "title": "256GB - White", "price": 600, "quantity": 12, "sku": "200102-WHITE", "is_disable": 0, "image": "/assets/images/products/p-3-2.jpg", "options": [{"name": "memory-storage", "value": "256GB"}, {"name": "color", "value": "White"}]},
+      {"id": 8, "title": "256GB - Blue", "price": 600, "quantity": 12, "sku": "200102-BLUE", "is_disable": 0, "image": "/assets/images/products/p-3-3.jpg", "options": [{"name": "memory-storage", "value": "256GB"}, {"name": "color", "value": "Blue"}]},
+
+      {"id": 9, "title": "512GB - Pink", "price": 650, "quantity": 15, "sku": "200103-Pink", "is_disable": 0, "image": "/assets/images/products/p-3.jpg", "options": [{"name": "memory-storage", "value": "512GB"}, {"name": "color", "value": "Pink"}]},
+      {"id": 10, "title": "512GB - Black", "price": 650, "quantity": 15, "sku": "200103-BLACK", "is_disable": 0, "image": "/assets/images/products/p-3-1.jpg", "options": [{"name": "memory-storage", "value": "512GB"}, {"name": "color", "value": "Black"}]},
+      {"id": 11, "title": "512GB - White", "price": 650, "quantity": 15, "sku": "200103-WHITE", "is_disable": 0, "image": "/assets/images/products/p-3-2.jpg", "options": [{"name": "memory-storage", "value": "512GB"}, {"name": "color", "value": "White"}]},
+      {"id": 12, "title": "512GB - Blue", "price": 650, "quantity": 15, "sku": "200103-BLUE", "is_disable": 0, "image": "/assets/images/products/p-3-3.jpg", "options": [{"name": "memory-storage", "value": "512GB"}, {"name": "color", "value": "Blue"}]}
+
+    ]
+  }
+]
