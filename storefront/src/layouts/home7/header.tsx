@@ -1,9 +1,9 @@
 'use client';
-import React, {useCallback, useRef} from 'react';
+import React, { useCallback, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useUI } from '@/hooks/use-UI';
-import {useActiveScroll} from '@/utils/use-active-scroll';
+import { useActiveScroll } from '@/utils/use-active-scroll';
 
 import Container from '@/components/shared/container';
 import Logo from '@/components/shared/logo';
@@ -11,9 +11,9 @@ import MenuIcon from '@/components/icons/menu-icon';
 import cn from 'classnames';
 
 import MainMenu from '@/layouts/header/main-menu';
-import {useSearchHandler} from "@/hooks/use-search-handler";
+import { useSearchHandler } from "@/hooks/use-search-handler";
 import SearchResults from "@/components/top-search/searchResults";
-import {siteSettings} from "@/data/site-settings";
+import { siteSettings } from "@/data/site-settings";
 import Link from "@/components/shared/link";
 import SearchForm from "@/components/top-search/search-form";
 import AuthDropdown from "@/layouts/header/auth-dropdown";
@@ -25,8 +25,8 @@ interface HeaderProps {
     className?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({className}) => {
-    const {openSidebar, displaySearch, displayMobileSearch} = useUI();
+const Header: React.FC<HeaderProps> = ({ className }) => {
+    const { openSidebar, displaySearch, displayMobileSearch } = useUI();
     const { menu } = useNavigation();
     const siteHeaderRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +34,7 @@ const Header: React.FC<HeaderProps> = ({className}) => {
 
     const handleMobileMenu = useCallback(() => {
         return openSidebar();
-    },[openSidebar]);
+    }, [openSidebar]);
 
     const {
         searchResults,
@@ -59,13 +59,13 @@ const Header: React.FC<HeaderProps> = ({className}) => {
                         <Container>
                             <div
                                 className="grid gap-2  grid-cols-[1fr_auto_1fr] items-center justify-between  py-4 ">
-                                <div className="relative flex-shrink-0 lg:hidden">
+                                <div className="relative shrink-0 lg:hidden">
                                     <button
                                         aria-label="Menu"
                                         className="p-1"
                                         onClick={handleMobileMenu}
                                     >
-                                        <MenuIcon/>
+                                        <MenuIcon />
                                     </button>
                                 </div>
                                 <div className={"store-info hidden lg:flex gap-5 text-sm"}>
@@ -76,7 +76,7 @@ const Header: React.FC<HeaderProps> = ({className}) => {
                                         {siteSettings.author.email}
                                     </Link>
                                 </div>
-                                <Logo/>
+                                <Logo />
                                 {/* End of logo */}
 
 
@@ -95,9 +95,9 @@ const Header: React.FC<HeaderProps> = ({className}) => {
 
                                     <div
                                         className=" flex justify-end-safe pe-3 xl:pe-5 text-sm space-x-5 xl:space-x-8  xl:min-w-[170px]">
-                                        <AuthDropdown hideLabel={true}/>
-                                        <WishlistButton hideLabel={true}/>
-                                        <CartButton hideLabel={true}/>
+                                        <AuthDropdown hideLabel={true} />
+                                        <WishlistButton hideLabel={true} />
+                                        <CartButton hideLabel={true} />
                                     </div>
                                     {/* End of auth & lang */}
                                 </div>
@@ -105,7 +105,7 @@ const Header: React.FC<HeaderProps> = ({className}) => {
                         </Container>
                     </div>
                     <div className={"Mainmenu flex justify-center bg-white border-b border-border-base"}>
-                        <MainMenu navigations={menu}/>
+                        <MainMenu navigations={menu} />
                         {/* End of the main menu */}
                     </div>
                 </div>
@@ -122,8 +122,6 @@ const Header: React.FC<HeaderProps> = ({className}) => {
                 onFocus={enableInputFocus}
             />
             {/* End of conditional search  */}
-
-
         </>
     );
 }

@@ -6,7 +6,8 @@ import useBreadcrumb, {formarBreadcrumbTitle} from "@/utils/use-breadcrumb"
 
 import {ROUTES} from "@/utils/routes"
 import {Dot} from "lucide-react";
-import { useI18n } from "@lib/hooks/use-i18n";
+import { useI18n, useLocale } from "@lib/hooks/use-i18n";
+import { useCategoryMap } from "@/hooks/use-category-map";
 
 interface BreadcrumbItemProps {
     children: React.ReactNode
@@ -75,6 +76,8 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
                                                }) => {
     const breadcrumbs = useBreadcrumb();
     const { t } = useI18n();
+    const locale = useLocale();
+    const { resolveSlug, slugToName } = useCategoryMap(locale);
     
     // Translation map for common breadcrumb paths
     const breadcrumbTranslations: Record<string, string> = {
@@ -84,20 +87,29 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
         'account': t('account'),
         'orders': t('orders'),
         'account-savelists': t('accountSavelists'),
+        'category': t('category'),
     };
     
     const memoizedBreadcrumbs = useMemo(() => {
         return breadcrumbs?.map((breadcrumb) => {
-            const formattedTitle = formarBreadcrumbTitle(breadcrumb.breadcrumb);
-            const translatedTitle = breadcrumbTranslations[breadcrumb.breadcrumb] || formattedTitle;
+            const segment = breadcrumb.breadcrumb;
+            // 1. Static route translations (compare, cart, category, etc.)
+            const staticLabel = breadcrumbTranslations[segment];
+            // 2. Category slug lookup from Medusa data
+            const categoryLabel = !staticLabel ? resolveSlug(segment) : undefined;
+            // 3. Fall back to slug-formatted title
+            const fallbackLabel = formarBreadcrumbTitle(segment);
+            
+            const label = staticLabel || categoryLabel || fallbackLabel;
             
             return (
                 <ActiveLink href={breadcrumb.href} activeClassName="text-heading" key={breadcrumb.href}>
-                    <span className="capitalize">{translatedTitle}</span>
+                    <span className="capitalize">{label}</span>
                 </ActiveLink>
             );
         });
-    },[breadcrumbs, t]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[breadcrumbs, t, slugToName]);
     return (
         <BreadcrumbItems separator={separator}>
             <ActiveLink href={ROUTES.HOME} activeClassName="">

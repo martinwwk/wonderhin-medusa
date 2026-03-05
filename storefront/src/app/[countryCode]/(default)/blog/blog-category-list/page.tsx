@@ -16,7 +16,7 @@ export default async function Page() {
           <PageHeroSection heroTitle="Blog Category List" heroSub='Discover style insights and trends on our fashion lifestyle blog'/>
           <div className="flex  blog-category">
             <>
-             <div className="flex-shrink-0 pe-5 xl:pe-10 hidden lg:block w-85  sticky top-16 h-full">
+             <div className="shrink-0 pe-5 xl:pe-10 hidden lg:block w-85  sticky top-16 h-full">
                 <BlogSidebar />
               </div>
               <div className="w-full ">

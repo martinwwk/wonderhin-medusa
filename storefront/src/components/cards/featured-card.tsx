@@ -44,7 +44,7 @@ const FeaturedCard: React.FC<Props> = ({item, className='', variant}) => {
                     className,
                 )}
             >
-                <div className={cn("flex-shrink-0  text-brand-dark",{
+                <div className={cn("shrink-0  text-brand-dark",{
                     'flex  flex-auto items-center justify-center max-w-15 h-15 border border-border-two rounded-full ': variant === 'home3',
                 })}>
                     <Icon width={imgSize.width} height={imgSize.height}/>

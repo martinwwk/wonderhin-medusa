@@ -40,7 +40,7 @@ export default async function AccountLayout({
                         <div className="lg:hidden">
                             <AccountNavMobile options={accountMenu}/>
                         </div>
-                        <div className="hidden lg:block flex-shrink-0 ">
+                        <div className="hidden lg:block shrink-0 ">
                             <AccountNav options={accountMenu}/>
                         </div>
                         

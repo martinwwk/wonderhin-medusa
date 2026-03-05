@@ -71,7 +71,7 @@ const Counter: React.FC<CounterProps> = ({
         onClick={onIncrement}
         disabled={disabled}
         className={cn(
-          'group flex items-center justify-center flex-shrink-0 transition-all ease-in-out duration-300 focus:outline-none focus-visible:outline-none',
+          'group flex items-center justify-center shrink-0 transition-all ease-in-out duration-300 focus:outline-none focus-visible:outline-none',
           {
             'w-8 md:w-12 h-8 rounded-2xl text-heading text-white me-1':
               variant === 'mercury' || variant === 'furni',

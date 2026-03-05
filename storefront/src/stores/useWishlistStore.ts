@@ -30,7 +30,7 @@ export const useWishlistStore = create<WishlistState>()(
             clearWishlist: () => set({ wishlistList: [] }),
         }),
         {
-            name: 'glozin-wishlists', // localStorage key
+            name: 'store-wishlists', // localStorage key
         }
     )
 );

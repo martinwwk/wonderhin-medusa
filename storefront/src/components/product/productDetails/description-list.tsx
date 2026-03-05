@@ -22,7 +22,7 @@ export default function DescriptionList() {
                     </div>
                 ))}
             </div>
-            <div className="flex-shrink-0 ps-7 xl:ps-8 hidden lg:block w-80  sticky top-16 h-full">
+            <div className="shrink-0 ps-7 xl:ps-8 hidden lg:block w-80  sticky top-16 h-full">
                 <BannerGrid
                     data={heroSidebar}
                     girdClassName={"grid-cols-1"}

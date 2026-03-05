@@ -1,11 +1,11 @@
 'use client';
 import Link from '@/components/shared/link';
 import cn from 'classnames';
-import {siteSettings} from '@/data/site-settings';
+import { siteSettings } from '@/data/site-settings';
 import React from "react";
-import {useTheme} from "next-themes";
+import { useTheme } from "next-themes";
 import Image from '@/components/shared/image';
-import {useIsMounted} from '@/utils/use-is-mounted';
+import { useIsMounted } from '@/utils/use-is-mounted';
 
 interface Props {
     variant?: "white" | "dark";
@@ -14,13 +14,13 @@ interface Props {
 }
 
 const Logo: React.FC<Props> = ({
-                                   className,
-                                   variant,
-                                   href = siteSettings.logo.href,
-                                   ...props
-                               }) => {
+    className,
+    variant,
+    href = siteSettings.logo.href,
+    ...props
+}) => {
     const mounted = useIsMounted();
-    const {theme} = useTheme();
+    const { theme } = useTheme();
 
     return (
         <div className={cn('inline-flex focus:outline-none ', className,)}>

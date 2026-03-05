@@ -53,7 +53,7 @@ const Header: React.FC<HeaderProps> = ({className}) => {
                 <div className="header-sticky bg-white">
                     <Container variant='fluid'>
                         <div className="grid gap-2  grid-cols-[1fr_auto_1fr] items-center justify-between  py-2">
-                            <div className="relative flex-shrink-0 lg:hidden">
+                            <div className="relative shrink-0 lg:hidden">
                                 <button
                                     aria-label="Menu"
                                     className="p-1"

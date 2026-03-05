@@ -80,7 +80,7 @@ export const useCartStore = create<CartState>()(
             resetCart: () => set(initialState),
         }),
         {
-            name: 'glozin-cart',
+            name: 'store-cart',
             partialize: (state) => ({
                 items: state.items,
             }),

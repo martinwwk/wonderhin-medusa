@@ -32,7 +32,7 @@ export const useCompareStore = create<CompareState>()(
             clearCompare: () => set({ compareList: [] }),
         }),
         {
-            name: 'glozin-compares', // localStorage key
+            name: 'store-compares', // localStorage key
         }
     )
 );

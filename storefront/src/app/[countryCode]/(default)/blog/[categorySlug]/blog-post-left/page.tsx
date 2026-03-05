@@ -16,7 +16,7 @@ export default async function Page() {
                 <div className="pt-7 lg:pt-10 pb-10 blog-category">
                     <Breadcrumb/>
                     <div className="flex pt-5 lg:pt-10 pb-6 lg:pb-6">
-                        <div className="flex-shrink-0 pe-7 xl:pe-10 hidden lg:block w-80  sticky top-16 h-full">
+                        <div className="shrink-0 pe-7 xl:pe-10 hidden lg:block w-80  sticky top-16 h-full">
                             <BlogSidebar/>
                         </div>
                         <div className="w-full ">

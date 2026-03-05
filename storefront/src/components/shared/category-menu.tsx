@@ -132,7 +132,7 @@ function SidebarMenu({items, className, categoriesLimit}: SidebarMenuProps) {
                         className={`flex items-center w-full py-3 text-start cursor-pointer  text-brand-dark`}
                         onClick={handleCategoryMenu}
                     >
-                        <div className={`inline-flex flex-shrink-0 ltr:mr-2 rtl:ml-2`}>
+                        <div className={`inline-flex shrink-0 ltr:mr-2 rtl:ml-2`}>
                             {categoryMenuToggle ? (
                                 <IoIosRemoveCircleOutline className="text-xl text-brand-dark text-opacity-80"/>
                             ) : (

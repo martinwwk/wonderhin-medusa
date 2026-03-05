@@ -19,7 +19,7 @@ export default async function Page() {
               <div className="w-full ">
                 <BlogPost key={'blogPost'}  />
               </div>
-                <div className="flex-shrink-0 ps-7 xl:ps-10 hidden lg:block w-80  sticky top-16 h-full">
+                <div className="shrink-0 ps-7 xl:ps-10 hidden lg:block w-80  sticky top-16 h-full">
                 <BlogSidebar />
               </div>
             </div>

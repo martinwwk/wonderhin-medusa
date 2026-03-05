@@ -132,7 +132,7 @@ export default function HorizontalFilter({ categories, onCategoryChange }: Horiz
                     <span className="text-sm">On sale</span>
                     {isOnSale && (
                             <span
-                                className={` flex-shrink-0 w-4 h-4 rounded-full text-brand-light flex items-center justify-center cursor-pointer ${colorMap[selectedColor].bg}`}>
+                                className={` shrink-0 w-4 h-4 rounded-full text-brand-light flex items-center justify-center cursor-pointer ${colorMap[selectedColor].bg}`}>
                             <X className="h-3 w-3 "/>
                             </span>
                         )}

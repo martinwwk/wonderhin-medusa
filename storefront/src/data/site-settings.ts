@@ -12,14 +12,14 @@ export const siteSettings = {
   },
   logo: {
     url: '/assets/images/logo/logo.svg',
-    alt: 'glozin',
+    alt: 'wonderhin',
     href: '/',
     width: 82,
     height: 36,
   },
   logoBlack: {
     url: '/assets/images/logo/logo-white.svg',
-    alt: 'glozin',
+    alt: 'wonderhin',
     href: '/',
     width: 82,
     height: 36,

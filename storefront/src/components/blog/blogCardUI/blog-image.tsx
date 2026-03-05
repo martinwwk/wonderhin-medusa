@@ -25,7 +25,7 @@ const BlogImage: React.FC<BlogProps> = ({ blog, variant="default",className }) =
         }
     }, [variant]);
     return (
-        <div className={cn("relative flex-shrink-0", className)}>
+        <div className={cn("relative shrink-0", className)}>
             <Link
                 href={`${ROUTES.BLOG}/${slugCategory}/${slug}`}
                 className="text-brand-dark flex "

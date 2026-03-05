@@ -18,8 +18,8 @@ const instrument = Instrument_Sans({
 
 export const metadata: Metadata = {
     title: {
-        template: 'Glozin | %s',
-        default: 'Glozin',
+        template: 'Wonderhin | %s',
+        default: 'Wonderhin',
     },
 };
 

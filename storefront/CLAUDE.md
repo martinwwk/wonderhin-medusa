@@ -1,7 +1,7 @@
-# CLAUDE.md - Glozin E-commerce Storefront
+# CLAUDE.md - Wonderhin E-commerce Storefront
 
 ## Project Overview
-Glozin is a Next.js storefront based on a premium Themeforest template, customized to integrate with a Medusa v2 backend. It uses the App Router, TanStack Query for data fetching, and i18next for localization.
+Wonderhin is a Next.js storefront based on a premium Themeforest template, customized to integrate with a Medusa v2 backend. It uses the App Router, TanStack Query for data fetching, and i18next for localization.
 
 ## Environment & Scripts
 - **Manager:** npm / yarn
