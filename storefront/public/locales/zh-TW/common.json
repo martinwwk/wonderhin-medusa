@@ -259,5 +259,8 @@
   "updateYourPassword": "更新您的密碼",
   "currentPassword": "目前密碼",
   "newPassword": "新密碼",
-  "updatePassword": "更新密碼"
+  "updatePassword": "更新密碼",
+  "trendingSearch": "熱門搜尋",
+  "popularProducts": "熱門商品",
+  "results": "個搜尋結果"
 }

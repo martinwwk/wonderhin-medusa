@@ -4,6 +4,7 @@ import { useUI } from '@/hooks/use-UI';
 import {useRouter} from "next/navigation";
 import { ROUTES } from '@/utils/routes';
 import {useSearchQuery} from "@/hooks/use-search-query";
+import { useRegion } from "@/hooks/use-region";
 
 export const useSearchHandler = () => {
     const router = useRouter();
@@ -17,8 +18,12 @@ export const useSearchHandler = () => {
     const [queryText, setQueryText] = useState('');
     const [inputFocus, setInputFocus] = useState<boolean>(false);
 
+    const { data: region } = useRegion();
+    const regionId = region?.id;
+
     const { data: searchResults, isLoading } = useSearchQuery({
         text: queryText,
+        regionId,
     });
 
     function handleSearch(e: React.SyntheticEvent) {

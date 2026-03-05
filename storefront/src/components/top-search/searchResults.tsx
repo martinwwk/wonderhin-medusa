@@ -3,7 +3,7 @@ import React from "react";
 import {Product} from "@/types/template";
 import {AnimatePresence, motion} from "motion/react";
 import Container from "@/components/shared/container";
-// import SearchResultsTrending from "@/components/top-search/searchCards/searchResults-trending";
+import SearchResultsTrending from "@/components/top-search/searchCards/searchResults-trending";
 import SearchResultsSuggestions from "@/components/top-search/searchCards/searchResults-suggestions";
 import SearchForm from "@/components/top-search/search-form";
 import SearchOverlay from "@/components/top-search/SearchOverlay";
@@ -71,8 +71,7 @@ const SearchResults: React.FC<Props> = ({
                                     <SearchResultsSuggestions searchResults={searchResults} queryText={queryText}
                                                               onClear={onClear}/>
                                 ) : (
-                                    // <SearchResultsTrending onClear={onClear}/>
-                                    null
+                                    <SearchResultsTrending onClear={onClear}/>
                                 )}
                             </div>
                         </Container>

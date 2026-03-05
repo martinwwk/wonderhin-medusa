@@ -1,12 +1,15 @@
-import { Product, QueryOptionsType } from "@/types/template";
-import { useQuery } from "@tanstack/react-query";
-import { API_RESOURCES } from "@/lib/data/api-endpoints";
-// import { fetchSearched } from "@/lib/data/template-products";
+import { QueryOptionsType } from "@/types/template";
+import { useProductsQuery } from "@/hooks/use-all-products";
 
-export const useSearchQuery = (options: QueryOptionsType) => {
-    return useQuery<Product[], Error>({
-        queryKey: [API_RESOURCES.PRODUCTS, options],
-        // queryFn: fetchSearched,
-        queryFn: () => Promise.resolve([]), // Placeholder until fetchSearched is implemented
+/**
+ * Search products from Medusa using the `q` text-search param.
+ * Requires: options.text  (the search term)
+ *           options.regionId  (Medusa region id — pass from useRegion().data?.id)
+ */
+export const useSearchQuery = (options: QueryOptionsType & { regionId?: string }) => {
+    return useProductsQuery({
+        q: options.text || "",
+        limit: options.limit || 8,
+        regionId: options.regionId,
     });
 };

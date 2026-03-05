@@ -259,5 +259,8 @@
   "updateYourPassword": "Update your password",
   "currentPassword": "Current password",
   "newPassword": "New password",
-  "updatePassword": "Update password"
+  "updatePassword": "Update password",
+  "trendingSearch": "Trending Search",
+  "popularProducts": "Popular Products",
+  "results": "results for"
 }

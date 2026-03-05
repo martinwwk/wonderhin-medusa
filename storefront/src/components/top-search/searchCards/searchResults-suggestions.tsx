@@ -54,10 +54,7 @@ const SearchResultsSuggestions: React.FC<Props> = ({searchResults,queryText, uni
                                 <Link
                                     key={idx}
                                     onClick={onClear}
-                                    href={{
-                                        pathname: ROUTES.SEARCH,
-                                        query: { q: tag.slug },
-                                    }}
+                                    href={`${ROUTES.SEARCH}?q=${encodeURIComponent(tag.slug)}`}
                                 >
                                     {tag.name}
                                 </Link>
@@ -74,10 +71,7 @@ const SearchResultsSuggestions: React.FC<Props> = ({searchResults,queryText, uni
                             onClick={onClear}
                             className={"min-w-[220px]"}
                             variant={"button-black"}
-                            href={{
-                                pathname: ROUTES.SEARCH,
-                                query: { q: queryText },
-                            }}
+                            href={`${ROUTES.SEARCH}?q=${encodeURIComponent(queryText)}`}
                         >
                             View all Results
                         </Link>
