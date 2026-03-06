@@ -47,14 +47,14 @@ const ActionsButton: React.FC<{ item: Order }> = ({item}) => {
                                 className="absolute top-[100%] ltr:right-4 ltr:top-full rtl:left-0 z-10 bg-white drop-shadow rounded py-2 table-more-menu"
                             >
                                 <div
-                                    className="text-[14px] whitespace-nowrap text-brand-dark py-2 px-5 hover:bg-[#F6F9FC] transition-all cursor-pointer"
+                                    className="text-14px whitespace-nowrap text-brand-dark py-2 px-5 hover:bg-[#F6F9FC] transition-all cursor-pointer"
                                     onClick={() => handleCartOpen(item)}
                                 >
                                     Order Details
                                 </div>
                                 <CloseButton
                                     type="button"
-                                    className="text-[14px] whitespace-nowrap text-[#F35C5C] py-2 px-5 hover:bg-[#F6F9FC] transition-all cursor-pointer"
+                                    className="text-14px whitespace-nowrap text-[#F35C5C] py-2 px-5 hover:bg-[#F6F9FC] transition-all cursor-pointer"
                                 >
                                     Cancel Order
                                 </CloseButton>

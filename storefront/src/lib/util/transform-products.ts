@@ -75,8 +75,8 @@ export function transformMedusaProduct(
       title: variant.title || "",
       price: variant.calculated_price?.calculated_amount || 0,
       sale_price: variant.calculated_price?.original_amount || 0,
-      quantity: variant.inventory_quantity || 0,
-      is_disable: (variant.inventory_quantity || 0) <= 0 ? 1 : 0,
+      quantity: variant.manage_inventory === false ? 9999 : (variant.inventory_quantity || 0),
+      is_disable: variant.manage_inventory === false ? 0 : ((variant.inventory_quantity || 0) <= 0 ? 1 : 0),
       image: variantImage ? {
         id: variant.id,
         thumbnail: getProxiedImageUrl(variantImage),
@@ -98,7 +98,9 @@ export function transformMedusaProduct(
     sale_price: pricing.salePrice,
     min_price: pricing.minPrice,
     max_price: pricing.maxPrice,
-    quantity: medusaProduct.variants?.reduce((sum, v) => sum + (v.inventory_quantity || 0), 0) || 0,
+    quantity: medusaProduct.variants?.some(v => v.manage_inventory === false)
+      ? 9999
+      : (medusaProduct.variants?.reduce((sum, v) => sum + (v.inventory_quantity || 0), 0) || 0),
     sold: 0, // Medusa doesn't track this by default
     videoUrl: (medusaProduct.metadata?.videoUrl as string) || "",
     image: mainImage,

@@ -32,18 +32,18 @@ const OrderDrawer: React.FC = () => {
                     </button>
                 </div>
                 <div className="p-5 md:p-8">
-                    <div className="text-[14px] opacity-70 mb-3 text-brand-dark">
+                    <div className="text-14px opacity-70 mb-3 text-brand-dark">
                         Shipping Address
                     </div>
                     <div
-                        className="rounded border border-solid min-h-[90px] bg-gray-100 p-4 border-border-two text-[12px] md:text-[14px]">
+                        className="rounded border border-solid min-h-[90px] bg-gray-100 p-4 border-border-two text-12px md:text-14px">
                         <p className="text-brand-dark opacity-70">
                             {formatLocation(shipping_address)}
                         </p>
                     </div>
                     <OrderStatus status={Number(data?.status?.serial ?? 0)}/>
                     <div
-                        className="grid grid-cols-12 bg-gray-300 py-3 rounded-[3px] text-brand-dark text-[12px] md:text-[14px]">
+                        className="grid grid-cols-12 bg-gray-300 py-3 rounded-[3px] text-brand-dark text-12px md:text-14px">
                         <div className="col-span-2"></div>
                         <div className="col-span-5">Items Name</div>
                         <div className="col-span-3 text-center md:ltr:text-left md:rtl:text-right">
@@ -55,7 +55,7 @@ const OrderDrawer: React.FC = () => {
                         <OrderDetailsContent key={index} item={item}/>
                     ))}
                     <div className="mt-3 ltr:text-right rtl:text-left">
-                        <div className="text-black inline-flex flex-col text-[12px] md:text-[14px]">
+                        <div className="text-black inline-flex flex-col text-12px md:text-14px">
                             <div className="pb-1 mb-2 border-b border-border-base ltr:pl-20 rtl:pr-20">
                                 <p className="flex justify-between mb-1">
                                     <span className="ltr:mr-8 rtl:ml-8">Sub total: </span>
@@ -90,12 +90,12 @@ const OrderDrawer: React.FC = () => {
                     </div>
                     <div className="mt-12 ltr:text-right rtl:text-left">
                 <span
-                    className="py-3 px-5 cursor-pointer inline-block text-[12px] md:text-[14px] text-black font-medium bg-white rounded border border-solid border-[#DEE5EA] ltr:mr-4 rtl:ml-4   hover:border-[#333] transition-all capitalize">
+                    className="py-3 px-5 cursor-pointer inline-block text-12px md:text-14px text-black font-medium bg-white rounded border border-solid border-[#DEE5EA] ltr:mr-4 rtl:ml-4   hover:border-[#333] transition-all capitalize">
                   Report order
                 </span>
                         <span
                             onClick={closeDrawer}
-                            className="py-3 px-5 cursor-pointer inline-block text-[12px] md:text-[14px] text-white font-medium bg-[#333] rounded border border-solid border-[#333]  hover:bg-[#333]/90  transition-all capitalize"
+                            className="py-3 px-5 cursor-pointer inline-block text-12px md:text-14px text-white font-medium bg-[#333] rounded border border-solid border-[#333]  hover:bg-[#333]/90  transition-all capitalize"
                         >
                   Cancel order
                 </span>

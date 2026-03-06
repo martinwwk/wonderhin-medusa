@@ -39,7 +39,7 @@ const HighlightTextCard: React.FC<BannerProps> = ({
         >
             <div className={cn("basis-1/2 flex flex-col items-center p-5  lg:py-13 text-center")}>
                 {subheading && (
-                    <Text className={"xs:text-[12px] text-brand-dark font-semibold mb-2 xs:cursor-default"}>{subheading}</Text>
+                    <Text className={"xs:text-12px text-brand-dark font-semibold mb-2 xs:cursor-default"}>{subheading}</Text>
                 )}
 
                 {heading && (

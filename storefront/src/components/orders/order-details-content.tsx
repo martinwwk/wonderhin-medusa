@@ -9,7 +9,7 @@ export const OrderDetailsContent: React.FC<{ item: Item }> = ({ item }) => {
   });
 
   return (
-    <div className="relative grid grid-cols-12 py-2 pb-0 border-b border-solid border-border-base text-[12px] md:text-[14px]">
+    <div className="relative grid grid-cols-12 py-2 pb-0 border-b border-solid border-border-base text-12px md:text-14px">
       <div className="self-center col-span-2">
         <Image
           src={item?.image}

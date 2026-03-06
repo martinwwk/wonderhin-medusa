@@ -66,13 +66,13 @@ const ProductImage: React.FC<ProductImageProps> = ({ product, outOfStock,variant
             {(discount || outOfStock) && (
                 <div className=" absolute top-3 z-10">
                     {discount && (
-                        <span className="text-[10px] font-semibold text-brand-light uppercase inline-block bg-red-600 rounded-full px-3 py-1.5 ms-3">
+                        <span className="text-10px font-semibold text-brand-light uppercase inline-block bg-red-600 rounded-full px-3 py-1.5 ms-3">
                     On Sale
                     </span>
                     )}
 
                     {outOfStock && (
-                        <span className="text-[10px] font-semibold text-brand-light uppercase inline-block bg-brand-dark dark:bg-white dark:text-brand-dark rounded-full px-3 py-1.5  ms-3">
+                        <span className="text-10px font-semibold text-brand-light uppercase inline-block bg-brand-dark dark:bg-white dark:text-brand-dark rounded-full px-3 py-1.5  ms-3">
                     Out Stock
                   </span>
                     )}

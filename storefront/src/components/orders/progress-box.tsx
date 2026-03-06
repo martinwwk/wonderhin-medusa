@@ -42,7 +42,7 @@ const ProgressBox: React.FC<ProgressProps> = ({status, data}) => {
                                         } top-1/2 transform-[1/2] h-[5px] bg-brand`}
                                     ></div>
                                 </div>
-                                <p className="text-brand-dark text-[12px] md:text-[14px] font-medium">
+                                <p className="text-brand-dark text-12px md:text-14px font-medium">
                                     {item?.name}
                                 </p>
                             </div>
@@ -64,7 +64,7 @@ const ProgressBox: React.FC<ProgressProps> = ({status, data}) => {
                                         } top-1/2 transform-[1/2] h-[5px] bg-[#E2E7EC]`}
                                     ></div>
                                 </div>
-                                <p className="text-brand-dark text-[12px] md:text-[14px] font-medium">
+                                <p className="text-brand-dark text-12px md:text-14px font-medium">
                                     {item?.name}
                                 </p>
                             </div>

@@ -9,7 +9,7 @@ interface ProductInfoProps {
 const ProductInfo: React.FC<ProductInfoProps> = ({ data }) => {
     const { t } = useI18n();
     return (
-        <dl className="productView-info text-[14px] leading-8 pb-5 mb-5 border-b border-border-base">
+        <dl className="productView-info text-14px leading-8 pb-5 mb-5 border-b border-border-base">
             <dt className="productView-info-name w-40 float-start">{t('brand')}</dt>
             <dd className="productView-info-value">{data.brand}</dd>
             <dt className="productView-info-name w-40 float-start">Operating System:</dt>

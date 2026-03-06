@@ -75,7 +75,7 @@ const BackgroundVideo: React.FC<Props> = ({
                             />
                         )}
 
-                        <Text className={"xs:text-[12px] font-bold mb-2 uppercase"}>{subheading}</Text>
+                        <Text className={"xs:text-12px font-bold mb-2 uppercase"}>{subheading}</Text>
                         <Heading variant="titleLarge" className={cn("mb-10", {
                                 "xl:text-5xl xl:leading-14": variant === 'default',
                                 'lg:mb-10': !description

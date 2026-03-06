@@ -1,6 +1,6 @@
 'use client';
 import { Element } from 'react-scroll';
-import React, { useState, useMemo, useCallback, useEffect, useRef } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 
 const DEFAULT_PRICE_RANGE: [number, number] = [0, 500];
 import TopBar from "@/components/category/top-bar";
@@ -69,7 +69,6 @@ export default function PageContent({ slug, regionId }: { slug: string; regionId
 	const [viewAs, setViewAs] = useState(Boolean(true));
 	const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([]);
 	const [priceRange, setPriceRange] = useState<[number, number]>(DEFAULT_PRICE_RANGE);
-	const initializedRef = useRef(false);
 	const pathname = usePathname();
 	const { getParams, query } = useQueryParam(pathname ?? '/');
 	const newQuery: { sort_by?: string } = getParams(
@@ -86,14 +85,6 @@ export default function PageContent({ slug, regionId }: { slug: string; regionId
 		return getSubCategoryFilterForSlug(categories, slug, locale);
 	}, [categories, slug, locale]);
 
-	// Initialize: pre-select all sub-categories when we first load a parent category page
-	useEffect(() => {
-		if (!initializedRef.current && allSubIds.length > 0) {
-			initializedRef.current = true;
-			setSelectedCategoryIds(allSubIds);
-		}
-	}, [allSubIds]);
-
 	const handleCategoryChange = useCallback((ids: string[]) => {
 		setSelectedCategoryIds(ids);
 	}, []);
@@ -102,16 +93,25 @@ export default function PageContent({ slug, regionId }: { slug: string; regionId
 		setPriceRange(value);
 	}, []);
 
-	// Determine which category IDs to filter products by
+	// Determine which category IDs to filter products by.
+	// When the user has selected specific sub-categories, use those.
+	// When nothing is selected (initial load OR all unchecked), include the
+	// parent category ID + all sub-category IDs so products assigned at any
+	// level of the tree are shown (Medusa does not recurse automatically).
+	// Only return undefined for leaf pages that have no sub-categories, which
+	// then falls through to the slug-based parent-category lookup.
 	const effectiveCategoryIds = useMemo(() => {
 		if (selectedCategoryIds.length > 0) {
 			return selectedCategoryIds;
 		}
-		// No filter selection yet — use slug-based default
+		if (allSubIds.length > 0) {
+			const parentId = parentCategory?.id?.toString();
+			return parentId ? [parentId, ...allSubIds] : allSubIds;
+		}
+		// Leaf category page (no sub-categories): use slug-based parent lookup
 		return undefined;
-	}, [selectedCategoryIds]);
+	}, [selectedCategoryIds, allSubIds, parentCategory]);
 
-	// Get category query parameters
 	const limit = LIMITS.PRODUCTS_LIMITS;
 	const { data, isLoading, isError, error } = useProductsQuery({
 		limit: limit,

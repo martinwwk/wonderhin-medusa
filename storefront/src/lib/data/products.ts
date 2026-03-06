@@ -146,7 +146,7 @@ export const retrieveProduct = async ({
         ...queryParam,
         region_id: region?.id,
         fields:
-          "*variants.calculated_price,+variants.inventory_quantity,*variants.images,+metadata,+tags,*translations,*images,+thumbnail",
+          "*variants.calculated_price,+variants.inventory_quantity,+variants.manage_inventory,*variants.images,+metadata,+tags,*translations,*images,+thumbnail",
       },
       headers,
       next,
