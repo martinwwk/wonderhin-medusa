@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict 7x58QJbcSBgZHs0xeTX0gO2hVUjCLVtZvfT6pynEoZ2sVUDXcpLKgj3fHhNVtEA
+\restrict 1u7MVEJeLLTePztgCuh3r8dKTykvNMvAlvkAwvz8sj0KQJ1gaDWsmzvG2tQTT0z
 
 -- Dumped from database version 15.15
 -- Dumped by pg_dump version 15.15
@@ -829,6 +829,22 @@ CREATE TABLE public.invite (
 
 
 ALTER TABLE public.invite OWNER TO postgres;
+
+--
+-- Name: invite_rbac_role; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.invite_rbac_role (
+    invite_id character varying(255) NOT NULL,
+    rbac_role_id character varying(255) NOT NULL,
+    id character varying(255) NOT NULL,
+    created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    deleted_at timestamp with time zone
+);
+
+
+ALTER TABLE public.invite_rbac_role OWNER TO postgres;
 
 --
 -- Name: link_module_migrations; Type: TABLE; Schema: public; Owner: postgres
@@ -3570,6 +3586,11 @@ img_01KEXP5SM9BC0PCX72GV276ZQD	https://medusa-public-images.s3.eu-west-1.amazona
 img_01KFMA7634HVJTA0VMB30CVGNH	http://localhost:9000/static/1769134594136-product-1.webp	\N	2026-01-23 02:16:34.149+00	2026-01-23 02:16:34.149+00	\N	0	prod_01KFMA7633M0GS3YF54WQWK8V5
 wgiaje	http://localhost:9000/static/1770865366898-6684b266aa256d0022d5a012-01.webp	\N	2026-02-12 03:02:47.034+00	2026-02-12 03:02:47.035+00	\N	0	prod_01KH5AEZE0APZ33X6WEET8PT9J
 9zah7	http://localhost:9000/static/1770791470611-6684b266aa256d0022d5a012-02.webp	\N	2026-02-11 06:31:10.637+00	2026-02-12 03:02:47.036+00	\N	1	prod_01KH5AEZE0APZ33X6WEET8PT9J
+tw553	http://localhost:9000/static/1772793043164-6684c93ec2ab4c00224c4634-01.webp	\N	2026-03-06 10:30:43.209+00	2026-03-06 10:30:43.209+00	\N	0	prod_01KK1B1KZA8QP9XJSH2HGPM3MM
+murg9l	http://localhost:9000/static/1772793043166-6684c93ec2ab4c00224c4634-02.webp	\N	2026-03-06 10:30:43.209+00	2026-03-06 10:30:43.209+00	\N	1	prod_01KK1B1KZA8QP9XJSH2HGPM3MM
+1gw2rq	http://localhost:9000/static/1772793043164-6684c93ec2ab4c00224c4634-03.webp	\N	2026-03-06 10:30:43.209+00	2026-03-06 10:30:43.209+00	\N	2	prod_01KK1B1KZA8QP9XJSH2HGPM3MM
+187wud	http://localhost:9000/static/1772793043166-6684c93ec2ab4c00224c4634-04.webp	\N	2026-03-06 10:30:43.209+00	2026-03-06 10:30:43.209+00	\N	3	prod_01KK1B1KZA8QP9XJSH2HGPM3MM
+y0ad9	http://localhost:9000/static/1772793043165-6684c93ec2ab4c00224c4634-05.webp	\N	2026-03-06 10:30:43.21+00	2026-03-06 10:30:43.21+00	\N	4	prod_01KK1B1KZA8QP9XJSH2HGPM3MM
 \.
 
 
@@ -3638,6 +3659,14 @@ COPY public.invite (id, email, accepted, token, expires_at, metadata, created_at
 
 
 --
+-- Data for Name: invite_rbac_role; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.invite_rbac_role (invite_id, rbac_role_id, id, created_at, updated_at, deleted_at) FROM stdin;
+\.
+
+
+--
 -- Data for Name: link_module_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -3663,6 +3692,7 @@ COPY public.link_module_migrations (id, table_name, link_descriptor, created_at)
 19	user_rbac_role	{"toModel": "rbac_role", "toModule": "rbac", "fromModel": "user", "fromModule": "user"}	2026-01-14 07:22:55.307392
 210	product_product_brand_brand	{"toModel": "brand", "toModule": "brand", "fromModel": "product", "fromModule": "product"}	2026-01-19 06:04:03.31304
 1451	product_product_category_categoryimage_category_image	{"toModel": "category_image", "toModule": "categoryImage", "fromModel": "product_category", "fromModule": "product"}	2026-02-16 08:28:40.204304
+1725	invite_rbac_role	{"toModel": "rbac_role", "toModule": "rbac", "fromModel": "invite", "fromModule": "user"}	2026-03-06 10:24:29.049453
 \.
 
 
@@ -3731,6 +3761,7 @@ loc_01KFZ9RD65B6YJCSH3XSE91C39	mn-MN	Mongolian (Mongolia)	2026-01-27 08:40:08.64
 
 COPY public.location_fulfillment_provider (stock_location_id, fulfillment_provider_id, id, created_at, updated_at, deleted_at) FROM stdin;
 sloc_01KEXP5SH53F9HTRK7BG7P16N7	manual_manual	locfp_01KEXP5SHGQ2JF6PBE4N2E0TNJ	2026-01-14 07:22:59.504364+00	2026-01-14 07:22:59.504364+00	\N
+sloc_01KK1ATWWFZAT7T3C7VZFC3WCT	manual_manual	locfp_01KK1ATWWSE1MMVKBPRZQPV6VB	2026-03-06 10:24:33.177283+00	2026-03-06 10:24:33.177283+00	\N
 \.
 
 
@@ -4257,6 +4288,7 @@ prpref_01KFCJ0EEFFVNG3AMKSARAK4P2	currency_code	hkd	f	2026-01-20 01:58:46.479+00
 prpref_01KFCJ0EEF2C9JF1YFEKXQNMHA	currency_code	usd	f	2026-01-20 01:58:46.479+00	2026-01-20 01:58:46.479+00	\N
 prpref_01KFCJ3P362TR3S8BTXFYPDFMP	region_id	reg_01KFCJ3P2TEK5Z4P62KBVTAZ3P	f	2026-01-20 02:00:32.614+00	2026-01-20 02:00:32.614+00	\N
 prpref_01KH7SJBW80Y92YTWN0VZNMMZP	region_id	reg_01KH7SJBVW27CE31NJWETDPNN3	f	2026-02-12 02:06:05.192+00	2026-02-12 02:06:05.192+00	\N
+prpref_01KK1ATWVXRQ4EBBN28MTVBPJK	region_id	reg_01KK1ATWVFW13NNHSMX5FXE5NZ	f	2026-03-06 10:24:33.15+00	2026-03-06 10:24:33.15+00	\N
 \.
 
 
@@ -4301,6 +4333,7 @@ pset_01KEXP5SQV2HHREK4AWGHSGZ7J	2026-01-14 07:22:59.707+00	2026-01-14 07:22:59.7
 pset_01KEXP5SQVT71QXVQHNVSQE09R	2026-01-14 07:22:59.707+00	2026-01-14 07:22:59.707+00	\N
 pset_01KFMA764EBHT3X2ZDHMCF8EF1	2026-01-23 02:16:34.19+00	2026-01-23 02:16:34.19+00	\N
 pset_01KH5AEZF0J4V65YNT5KAA3EYC	2026-02-11 03:03:36.672+00	2026-02-11 03:03:36.672+00	\N
+pset_01KK1B1M335ZS9Y29GNRNA71Z2	2026-03-06 10:28:13.54+00	2026-03-06 10:28:13.54+00	\N
 \.
 
 
@@ -4315,6 +4348,7 @@ prod_01KEXP5SM6N24680BAA32FX71Y	Medusa Shorts	shorts	\N	Reimagine the feeling of
 prod_01KEXP5SM5RRMY6D3MYZW6Z196	Medusa T-Shirt	t-shirt	\N	Reimagine the feeling of a classic T-shirt. With our cotton T-shirts, everyday essentials no longer have to be ordinary.	f	published	https://medusa-public-images.s3.eu-west-1.amazonaws.com/tee-black-front.png	400	\N	\N	\N	\N	\N	\N	\N	pcol_01KFCG71WTYH187XWZGD18T2MA	\N	t	\N	2026-01-14 07:22:59.593+00	2026-01-20 01:28:15.178+00	\N	\N
 prod_01KFMA7633M0GS3YF54WQWK8V5	Boho handbag	boho-handbag	\N	Size: 70cm x 60cm\n\n======================= \nThis page is only used as a product catalog. If you want to purchase, please go to Instagram inbox (@wonderhin.handmade)	f	published	http://localhost:9000/static/1769134594136-product-1.webp	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-01-23 02:16:34.149+00	2026-01-27 02:52:56.188+00	\N	\N
 prod_01KH5AEZE0APZ33X6WEET8PT9J	Lunch bag (Cherry blossoms 🌸 )	lunch-bag-cherry-blossoms		There is a place for your wallet, tissues, lipstick, and mobile phone. You are afraid of falling when you go out for lunch \n\nSize: 32cm W x 34cm H	f	published	http://localhost:9000/static/1770865366898-6684b266aa256d0022d5a012-01.webp	\N	\N	34	32				\N	\N	\N	f	\N	2026-02-11 03:03:36.641+00	2026-02-16 04:14:32.909+00	\N	\N
+prod_01KK1B1KZA8QP9XJSH2HGPM3MM	Bandana tote bag	bandana-tote-bag		Cotton\nSize: 32×35cm\n\n*This page is only used as a product catalog.*\nIf you want to purchase, please go to Instagram inbox (@wonderhin.handmade)	f	published	http://localhost:9000/static/1772793043164-6684c93ec2ab4c00224c4634-01.webp	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	\N	2026-03-06 10:28:13.432+00	2026-03-06 10:36:34.314+00	\N	\N
 \.
 
 
@@ -4344,6 +4378,7 @@ prod_01KEXP5SM60G3EXBA2FB86C4G9	pcat_01KEXP5SKXGJ492S8BP9F10QPF
 prod_01KEXP5SM6N24680BAA32FX71Y	pcat_01KEXP5SKX61PP1EYFHQVYKMWZ
 prod_01KH5AEZE0APZ33X6WEET8PT9J	pcat_01KH59NSWKYYYJ366X7FVZG9W5
 prod_01KEXP5SM60G3EXBA2FB86C4G9	pcat_01KJ05GAY784AHR0M6HD1TGV8E
+prod_01KK1B1KZA8QP9XJSH2HGPM3MM	pcat_01KEXP5SKWMG8B1PPMVHXFH15T
 \.
 
 
@@ -4368,6 +4403,7 @@ opt_01KEXP5SM8CZPM37QCRV0K6KE5	Size	prod_01KEXP5SM60G3EXBA2FB86C4G9	\N	2026-01-1
 opt_01KEXP5SM9VMX7MEP2FJ21B4GR	Size	prod_01KEXP5SM6N24680BAA32FX71Y	\N	2026-01-14 07:22:59.594+00	2026-01-14 07:22:59.594+00	\N
 opt_01KFMA7634HS8Y2V1ZBE9PK5KH	Default option	prod_01KFMA7633M0GS3YF54WQWK8V5	\N	2026-01-23 02:16:34.149+00	2026-01-23 02:16:34.149+00	\N
 opt_01KH5AEZE1RVNV2VNMWZWANPQ6	Default option	prod_01KH5AEZE0APZ33X6WEET8PT9J	\N	2026-02-11 03:03:36.641+00	2026-02-11 03:03:36.641+00	\N
+opt_01KK1B1KZMSCTPJ25HRPTNBNFP	Default option	prod_01KK1B1KZA8QP9XJSH2HGPM3MM	\N	2026-03-06 10:28:13.433+00	2026-03-06 10:28:13.433+00	\N
 \.
 
 
@@ -4396,6 +4432,7 @@ optval_01KEXP5SM9YNSRJJEK0S0PXA5B	L	opt_01KEXP5SM9VMX7MEP2FJ21B4GR	\N	2026-01-14
 optval_01KEXP5SM9NT67AK938C8AX5EY	XL	opt_01KEXP5SM9VMX7MEP2FJ21B4GR	\N	2026-01-14 07:22:59.594+00	2026-01-14 07:22:59.594+00	\N
 optval_01KFMA7634DX5YFVMHZSSS9D2A	Default option value	opt_01KFMA7634HS8Y2V1ZBE9PK5KH	\N	2026-01-23 02:16:34.149+00	2026-01-23 02:16:34.149+00	\N
 optval_01KH5AEZE1T6KDKQMMT07THHPH	Default option value	opt_01KH5AEZE1RVNV2VNMWZWANPQ6	\N	2026-02-11 03:03:36.641+00	2026-02-11 03:03:36.641+00	\N
+optval_01KK1B1KZM5HFN613R24PFR0JS	Default option value	opt_01KK1B1KZMSCTPJ25HRPTNBNFP	\N	2026-03-06 10:28:13.433+00	2026-03-06 10:28:13.433+00	\N
 \.
 
 
@@ -4431,6 +4468,7 @@ prod_01KEXP5SM60G3EXBA2FB86C4G9	sc_01KEXP5SEB2P87PM49V5A9WTA8	prodsc_01KEXP5SMQ8
 prod_01KEXP5SM6N24680BAA32FX71Y	sc_01KEXP5SEB2P87PM49V5A9WTA8	prodsc_01KEXP5SMQ14SDVYN3G62109FW	2026-01-14 07:22:59.605878+00	2026-01-14 07:22:59.605878+00	\N
 prod_01KFMA7633M0GS3YF54WQWK8V5	sc_01KEXP5SEB2P87PM49V5A9WTA8	prodsc_01KFMA763GHSTNNTZGDYBQKJFK	2026-01-23 02:16:34.160136+00	2026-01-23 02:16:34.160136+00	\N
 prod_01KH5AEZE0APZ33X6WEET8PT9J	sc_01KEXP5SEB2P87PM49V5A9WTA8	prodsc_01KH5AEZE8J186Y0R93E4TMQJ5	2026-02-11 03:03:36.647559+00	2026-02-11 03:03:36.647559+00	\N
+prod_01KK1B1KZA8QP9XJSH2HGPM3MM	sc_01KEXP5SEB2P87PM49V5A9WTA8	prodsc_01KK1B1M142BQBY0WDN6H312ME	2026-03-06 10:28:13.475299+00	2026-03-06 10:28:13.475299+00	\N
 \.
 
 
@@ -4497,6 +4535,7 @@ variant_01KEXP5SNFN9FMJKH6YS0SC2GA	M / White	SHIRT-M-WHITE	\N	\N	\N	f	t	\N	\N	\N
 variant_01KEXP5SNFRXFK570EJ00SVRYS	L / White	SHIRT-L-WHITE	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01KEXP5SM5RRMY6D3MYZW6Z196	2026-01-14 07:22:59.633+00	2026-01-14 07:22:59.633+00	\N	\N
 variant_01KEXP5SNFV9FRS5P67Q4V3J6M	XL / Black	SHIRT-XL-BLACK	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01KEXP5SM5RRMY6D3MYZW6Z196	2026-01-14 07:22:59.633+00	2026-01-14 07:22:59.633+00	\N	\N
 variant_01KEXP5SNFVSK8TBER4SRH6GR0	XL / White	SHIRT-XL-WHITE	\N	\N	\N	f	t	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01KEXP5SM5RRMY6D3MYZW6Z196	2026-01-14 07:22:59.633+00	2026-01-14 07:22:59.633+00	\N	\N
+variant_01KK1B1M29RQAJ2J5TJ764E2P9	Bandana tote bag	\N	\N	\N	\N	f	f	\N	\N	\N	\N	\N	\N	\N	\N	\N	0	prod_01KK1B1KZA8QP9XJSH2HGPM3MM	2026-03-06 10:28:13.513+00	2026-03-06 10:28:13.513+00	\N	\N
 \.
 
 
@@ -4563,6 +4602,7 @@ variant_01KEXP5SNGHTBQ0T0A08Z2GKGA	optval_01KEXP5SM9YNSRJJEK0S0PXA5B
 variant_01KEXP5SNG8KSFSBC75RW0EEHA	optval_01KEXP5SM9NT67AK938C8AX5EY
 variant_01KFMA763YVDRFYFY07FTATYK5	optval_01KFMA7634DX5YFVMHZSSS9D2A
 variant_01KH5AEZEMPH1ETR14TJJ6Z2BY	optval_01KH5AEZE1T6KDKQMMT07THHPH
+variant_01KK1B1M29RQAJ2J5TJ764E2P9	optval_01KK1B1KZM5HFN613R24PFR0JS
 \.
 
 
@@ -4593,6 +4633,7 @@ variant_01KEXP5SNGHTBQ0T0A08Z2GKGA	pset_01KEXP5SQV2HHREK4AWGHSGZ7J	pvps_01KEXP5S
 variant_01KEXP5SNG8KSFSBC75RW0EEHA	pset_01KEXP5SQVT71QXVQHNVSQE09R	pvps_01KEXP5SRWF597C2V7053P1F5Z	2026-01-14 07:22:59.736282+00	2026-01-14 07:22:59.736282+00	\N
 variant_01KFMA763YVDRFYFY07FTATYK5	pset_01KFMA764EBHT3X2ZDHMCF8EF1	pvps_01KFMA764RNV9XE18BBQYSGXDN	2026-01-23 02:16:34.200269+00	2026-01-23 02:16:34.200269+00	\N
 variant_01KH5AEZEMPH1ETR14TJJ6Z2BY	pset_01KH5AEZF0J4V65YNT5KAA3EYC	pvps_01KH5AEZFAQNPHMCXJ8VFVHSPH	2026-02-11 03:03:36.681797+00	2026-02-11 03:03:36.681797+00	\N
+variant_01KK1B1M29RQAJ2J5TJ764E2P9	pset_01KK1B1M335ZS9Y29GNRNA71Z2	pvps_01KK1B1M3NCZM17B7WC5YNSQC4	2026-03-06 10:28:13.557572+00	2026-03-06 10:28:13.557572+00	\N
 \.
 
 
@@ -4721,6 +4762,7 @@ COPY public.region (id, name, currency_code, metadata, created_at, updated_at, d
 reg_01KFCJ3P2TEK5Z4P62KBVTAZ3P	Hong Kong	hkd	\N	2026-01-20 02:00:32.605+00	2026-01-20 02:00:32.605+00	\N	f
 reg_01KEXP5SG4F1K07ZVNJBQR30FT	Europe	eur	\N	2026-01-14 07:22:59.464+00	2026-02-11 07:49:01.597+00	2026-02-11 07:49:01.597+00	t
 reg_01KH7SJBVW27CE31NJWETDPNN3	Europe	eur	\N	2026-02-12 02:06:05.184+00	2026-03-06 08:05:23.819+00	2026-03-06 08:05:23.819+00	t
+reg_01KK1ATWVFW13NNHSMX5FXE5NZ	Europe	eur	\N	2026-03-06 10:24:33.139+00	2026-03-06 10:24:33.139+00	\N	t
 \.
 
 
@@ -4972,13 +5014,13 @@ ye	yem	887	YEMEN	Yemen	\N	\N	2026-01-14 07:22:56.51+00	2026-01-14 07:22:56.51+00
 zm	zmb	894	ZAMBIA	Zambia	\N	\N	2026-01-14 07:22:56.51+00	2026-01-14 07:22:56.51+00	\N
 zw	zwe	716	ZIMBABWE	Zimbabwe	\N	\N	2026-01-14 07:22:56.51+00	2026-01-14 07:22:56.51+00	\N
 ax	ala	248	ÅLAND ISLANDS	Åland Islands	\N	\N	2026-01-14 07:22:56.51+00	2026-01-14 07:22:56.51+00	\N
-se	swe	752	SWEDEN	Sweden	\N	\N	2026-01-14 07:22:56.509+00	2026-03-06 08:04:08.909+00	\N
-es	esp	724	SPAIN	Spain	\N	\N	2026-01-14 07:22:56.509+00	2026-03-06 08:04:15.202+00	\N
-it	ita	380	ITALY	Italy	\N	\N	2026-01-14 07:22:56.509+00	2026-03-06 08:04:21.191+00	\N
-de	deu	276	GERMANY	Germany	\N	\N	2026-01-14 07:22:56.509+00	2026-03-06 08:04:26.806+00	\N
-fr	fra	250	FRANCE	France	\N	\N	2026-01-14 07:22:56.509+00	2026-03-06 08:04:30.887+00	\N
-dk	dnk	208	DENMARK	Denmark	\N	\N	2026-01-14 07:22:56.508+00	2026-03-06 08:04:35.768+00	\N
-gb	gbr	826	UNITED KINGDOM	United Kingdom	\N	\N	2026-01-14 07:22:56.51+00	2026-03-06 08:05:10.171+00	\N
+se	swe	752	SWEDEN	Sweden	reg_01KK1ATWVFW13NNHSMX5FXE5NZ	\N	2026-01-14 07:22:56.509+00	2026-03-06 10:24:33.14+00	\N
+es	esp	724	SPAIN	Spain	reg_01KK1ATWVFW13NNHSMX5FXE5NZ	\N	2026-01-14 07:22:56.509+00	2026-03-06 10:24:33.14+00	\N
+it	ita	380	ITALY	Italy	reg_01KK1ATWVFW13NNHSMX5FXE5NZ	\N	2026-01-14 07:22:56.509+00	2026-03-06 10:24:33.14+00	\N
+de	deu	276	GERMANY	Germany	reg_01KK1ATWVFW13NNHSMX5FXE5NZ	\N	2026-01-14 07:22:56.509+00	2026-03-06 10:24:33.139+00	\N
+fr	fra	250	FRANCE	France	reg_01KK1ATWVFW13NNHSMX5FXE5NZ	\N	2026-01-14 07:22:56.509+00	2026-03-06 10:24:33.14+00	\N
+dk	dnk	208	DENMARK	Denmark	reg_01KK1ATWVFW13NNHSMX5FXE5NZ	\N	2026-01-14 07:22:56.508+00	2026-03-06 10:24:33.14+00	\N
+gb	gbr	826	UNITED KINGDOM	United Kingdom	reg_01KK1ATWVFW13NNHSMX5FXE5NZ	\N	2026-01-14 07:22:56.51+00	2026-03-06 10:24:33.14+00	\N
 \.
 
 
@@ -4990,6 +5032,7 @@ COPY public.region_payment_provider (region_id, payment_provider_id, id, created
 reg_01KFCJ3P2TEK5Z4P62KBVTAZ3P	pp_system_default	regpp_01KFCJ3P365XDT0FA4N3ZZ9DZP	2026-01-20 02:00:32.613893+00	2026-01-20 02:00:32.613893+00	\N
 reg_01KEXP5SG4F1K07ZVNJBQR30FT	pp_system_default	regpp_01KEXP5SGK0NS49TXNT4JQJ2YP	2026-01-14 07:22:59.475177+00	2026-02-11 07:49:01.604+00	2026-02-11 07:49:01.603+00
 reg_01KH7SJBVW27CE31NJWETDPNN3	pp_system_default	regpp_01KH7SJBWCFXZBY5ZGF6XRRQD9	2026-02-12 02:06:05.195939+00	2026-03-06 08:05:23.827+00	2026-03-06 08:05:23.826+00
+reg_01KK1ATWVFW13NNHSMX5FXE5NZ	pp_system_default	regpp_01KK1ATWW023TGQ28G8V48ANHB	2026-03-06 10:24:33.152035+00	2026-03-06 10:24:33.152035+00	\N
 \.
 
 
@@ -5109,6 +5152,7 @@ sorul_01KEXP5SJJ5BEC0KKSWZY6CQEZ	is_return	eq	"false"	so_01KEXP5SJJTR29BPP56G5ES
 COPY public.shipping_option_type (id, label, description, code, created_at, updated_at, deleted_at) FROM stdin;
 sotype_01KEXP5SJHXSAGK6ENESKM6825	Standard	Ship in 2-3 days.	standard	2026-01-14 07:22:59.538+00	2026-01-14 07:22:59.538+00	\N
 sotype_01KEXP5SJJKK8MRK8ZX27TW89J	Express	Ship in 24 hours.	express	2026-01-14 07:22:59.538+00	2026-01-14 07:22:59.538+00	\N
+sotype_01KK18Q55GEQJFCYBG0F6V9KY0	1	1	1	2026-03-06 09:47:33.424+00	2026-03-06 09:53:32.606+00	2026-03-06 09:53:32.605+00
 \.
 
 
@@ -5127,6 +5171,7 @@ sp_01KEXP5Q8BW5PPR02XDD8K8RA9	Default Shipping Profile	default	\N	2026-01-14 07:
 
 COPY public.stock_location (id, created_at, updated_at, deleted_at, name, address_id, metadata) FROM stdin;
 sloc_01KEXP5SH53F9HTRK7BG7P16N7	2026-01-14 07:22:59.493+00	2026-01-14 07:22:59.493+00	\N	European Warehouse	laddr_01KEXP5SH4PVCQVPR7XZYQJS6D	\N
+sloc_01KK1ATWWFZAT7T3C7VZFC3WCT	2026-03-06 10:24:33.167+00	2026-03-06 10:24:33.167+00	\N	European Warehouse	laddr_01KK1ATWWEAD0PWWTXKBA0JN4R	\N
 \.
 
 
@@ -5136,6 +5181,7 @@ sloc_01KEXP5SH53F9HTRK7BG7P16N7	2026-01-14 07:22:59.493+00	2026-01-14 07:22:59.4
 
 COPY public.stock_location_address (id, created_at, updated_at, deleted_at, address_1, address_2, company, city, country_code, phone, province, postal_code, metadata) FROM stdin;
 laddr_01KEXP5SH4PVCQVPR7XZYQJS6D	2026-01-14 07:22:59.493+00	2026-01-14 07:22:59.493+00	\N		\N	\N	Copenhagen	DK	\N	\N	\N	\N
+laddr_01KK1ATWWEAD0PWWTXKBA0JN4R	2026-03-06 10:24:33.167+00	2026-03-06 10:24:33.167+00	\N		\N	\N	Copenhagen	DK	\N	\N	\N	\N
 \.
 
 
@@ -5144,7 +5190,7 @@ laddr_01KEXP5SH4PVCQVPR7XZYQJS6D	2026-01-14 07:22:59.493+00	2026-01-14 07:22:59.
 --
 
 COPY public.store (id, name, default_sales_channel_id, default_region_id, default_location_id, metadata, created_at, updated_at, deleted_at) FROM stdin;
-store_01KEXP5SENWJTQZFTYXZQWFDX5	Medusa Store	sc_01KEXP5SEB2P87PM49V5A9WTA8	reg_01KFCJ3P2TEK5Z4P62KBVTAZ3P	sloc_01KEXP5SH53F9HTRK7BG7P16N7	\N	2026-01-14 07:22:59.412928+00	2026-01-14 07:22:59.412928+00	\N
+store_01KEXP5SENWJTQZFTYXZQWFDX5	Medusa Store	sc_01KEXP5SEB2P87PM49V5A9WTA8	reg_01KFCJ3P2TEK5Z4P62KBVTAZ3P	sloc_01KK1ATWWFZAT7T3C7VZFC3WCT	\N	2026-01-14 07:22:59.412928+00	2026-01-14 07:22:59.412928+00	\N
 \.
 
 
@@ -5153,8 +5199,8 @@ store_01KEXP5SENWJTQZFTYXZQWFDX5	Medusa Store	sc_01KEXP5SEB2P87PM49V5A9WTA8	reg_
 --
 
 COPY public.store_currency (id, currency_code, is_default, store_id, created_at, updated_at, deleted_at) FROM stdin;
-stocur_01KK111Z803SGGPX4MG0E3XPBW	hkd	t	store_01KEXP5SENWJTQZFTYXZQWFDX5	2026-03-06 07:33:39.198718+00	2026-03-06 07:33:39.198718+00	\N
-stocur_01KK111Z8054T3CG9HW3CE3K9R	usd	f	store_01KEXP5SENWJTQZFTYXZQWFDX5	2026-03-06 07:33:39.198718+00	2026-03-06 07:33:39.198718+00	\N
+stocur_01KK1ATWTZT62DQTR5H37SXNJP	eur	t	store_01KEXP5SENWJTQZFTYXZQWFDX5	2026-03-06 10:24:33.116452+00	2026-03-06 10:24:33.116452+00	\N
+stocur_01KK1ATWTZWM1EWXNZX8V2Q48B	usd	f	store_01KEXP5SENWJTQZFTYXZQWFDX5	2026-03-06 10:24:33.116452+00	2026-03-06 10:24:33.116452+00	\N
 \.
 
 
@@ -5197,13 +5243,20 @@ COPY public.tax_rate_rule (id, tax_rate_id, reference_id, reference, metadata, c
 --
 
 COPY public.tax_region (id, provider_id, country_code, province_code, parent_id, metadata, created_at, updated_at, created_by, deleted_at) FROM stdin;
-txreg_01KEXP5SGVWK3DKNEC83RTN6M3	tp_system	gb	\N	\N	\N	2026-01-14 07:22:59.484+00	2026-01-14 07:22:59.484+00	\N	\N
 txreg_01KEXP5SGWEJ112MHEN6Z9VK1A	tp_system	se	\N	\N	\N	2026-01-14 07:22:59.484+00	2026-01-27 03:47:24.549+00	\N	2026-01-27 03:47:24.548+00
 txreg_01KEXP5SGWCK55QAP4TY512Z27	tp_system	it	\N	\N	\N	2026-01-14 07:22:59.484+00	2026-01-27 03:47:27.332+00	\N	2026-01-27 03:47:27.331+00
 txreg_01KEXP5SGW1M4JPW5SH87BZK1Z	tp_system	fr	\N	\N	\N	2026-01-14 07:22:59.484+00	2026-01-27 03:47:30.863+00	\N	2026-01-27 03:47:30.863+00
 txreg_01KEXP5SGWB7BPTSCYM108JH2D	tp_system	es	\N	\N	\N	2026-01-14 07:22:59.484+00	2026-01-27 03:47:33.312+00	\N	2026-01-27 03:47:33.311+00
 txreg_01KEXP5SGWJFDWBCMR4VS9XWVY	tp_system	dk	\N	\N	\N	2026-01-14 07:22:59.484+00	2026-01-27 03:47:35.988+00	\N	2026-01-27 03:47:35.988+00
 txreg_01KEXP5SGW0MJSWR8VNFJEVRK8	tp_system	de	\N	\N	\N	2026-01-14 07:22:59.484+00	2026-01-27 03:47:38.914+00	\N	2026-01-27 03:47:38.914+00
+txreg_01KEXP5SGVWK3DKNEC83RTN6M3	tp_system	gb	\N	\N	\N	2026-01-14 07:22:59.484+00	2026-03-06 09:06:14.893+00	\N	2026-03-06 09:06:14.893+00
+txreg_01KK1ATWW66FWHK2P319CVMM45	tp_system	gb	\N	\N	\N	2026-03-06 10:24:33.158+00	2026-03-06 10:24:33.158+00	\N	\N
+txreg_01KK1ATWW6CTKGHJ75PVX2QMC8	tp_system	de	\N	\N	\N	2026-03-06 10:24:33.158+00	2026-03-06 10:24:33.158+00	\N	\N
+txreg_01KK1ATWW6N6P8HJNEXCF24V5W	tp_system	dk	\N	\N	\N	2026-03-06 10:24:33.159+00	2026-03-06 10:24:33.159+00	\N	\N
+txreg_01KK1ATWW6AY79C36FRYVM09RH	tp_system	se	\N	\N	\N	2026-03-06 10:24:33.159+00	2026-03-06 10:24:33.159+00	\N	\N
+txreg_01KK1ATWW6TZCY7S4T8JV0AAMC	tp_system	fr	\N	\N	\N	2026-03-06 10:24:33.159+00	2026-03-06 10:24:33.159+00	\N	\N
+txreg_01KK1ATWW6HFV789CKZC474747	tp_system	es	\N	\N	\N	2026-03-06 10:24:33.159+00	2026-03-06 10:24:33.159+00	\N	\N
+txreg_01KK1ATWW60588NV80FAB0HMZ8	tp_system	it	\N	\N	\N	2026-03-06 10:24:33.159+00	2026-03-06 10:24:33.159+00	\N	\N
 \.
 
 
@@ -5223,6 +5276,8 @@ trans_01KJYN9QT670K8JQWWYHE82H7G	pcat_01KEXP5SKXGJ492S8BP9F10QPF	product_categor
 trans_01KJYN9QT6ESAX8RPD4KW87M4X	pcat_01KEXP5SKXVHK7D5022FDF0XKY	product_category	zh-TW	{"name": "頸鏈", "description": ""}	2026-03-05 09:29:41.958+00	2026-03-05 09:29:41.958+00	\N	1
 trans_01KJYN9QT66FNVDC0CY63ZFW0T	pcat_01KH59MWTZR8VH1B0S2YJW7VGY	product_category	zh-TW	{"name": "印度布系列", "description": ""}	2026-03-05 09:29:41.958+00	2026-03-05 09:29:41.958+00	\N	1
 trans_01KJYN9QT6R8Y054YR915GZ8G5	pcat_01KH59NSWKYYYJ366X7FVZG9W5	product_category	zh-TW	{"name": "Lunch袋", "description": ""}	2026-03-05 09:29:41.958+00	2026-03-05 09:29:41.958+00	\N	1
+trans_01KK18GSWXK94G3CXN5HSM0R20	sotype_01KEXP5SJHXSAGK6ENESKM6825	shipping_option_type	zh-TW	{"label": "標準配送", "description": "2-3天內出貨"}	2026-03-06 09:44:05.278+00	2026-03-06 09:44:05.278+00	\N	2
+trans_01KK18GSWXSVPA8TT9QZCRTX27	sotype_01KEXP5SJJKK8MRK8ZX27TW89J	shipping_option_type	zh-TW	{"label": "快遞", "description": "24小時內出貨"}	2026-03-06 09:44:05.278+00	2026-03-06 09:44:05.278+00	\N	2
 \.
 
 
@@ -5293,7 +5348,7 @@ COPY public.workflow_execution (id, workflow_id, transaction_id, execution, cont
 -- Name: link_module_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.link_module_migrations_id_seq', 1703, true);
+SELECT pg_catalog.setval('public.link_module_migrations_id_seq', 1725, true);
 
 
 --
@@ -5631,6 +5686,14 @@ ALTER TABLE ONLY public.inventory_level
 
 ALTER TABLE ONLY public.invite
     ADD CONSTRAINT invite_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: invite_rbac_role invite_rbac_role_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.invite_rbac_role
+    ADD CONSTRAINT invite_rbac_role_pkey PRIMARY KEY (invite_id, rbac_role_id);
 
 
 --
@@ -6937,6 +7000,13 @@ CREATE INDEX "IDX_deleted_at_-71518339" ON public.order_promotion USING btree (d
 
 
 --
+-- Name: IDX_deleted_at_-85069d44; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX "IDX_deleted_at_-85069d44" ON public.invite_rbac_role USING btree (deleted_at);
+
+
+--
 -- Name: IDX_deleted_at_-a9d4a70b; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7238,6 +7308,13 @@ CREATE INDEX "IDX_id_-71518339" ON public.order_promotion USING btree (id);
 
 
 --
+-- Name: IDX_id_-85069d44; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX "IDX_id_-85069d44" ON public.invite_rbac_role USING btree (id);
+
+
+--
 -- Name: IDX_id_-a9d4a70b; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7417,6 +7494,13 @@ CREATE INDEX "IDX_invite_deleted_at" ON public.invite USING btree (deleted_at) W
 --
 
 CREATE UNIQUE INDEX "IDX_invite_email_unique" ON public.invite USING btree (email) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: IDX_invite_id_-85069d44; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX "IDX_invite_id_-85069d44" ON public.invite_rbac_role USING btree (invite_id) WHERE (deleted_at IS NULL);
 
 
 --
@@ -8754,6 +8838,13 @@ CREATE UNIQUE INDEX "IDX_provider_identity_provider_entity_id" ON public.provide
 --
 
 CREATE INDEX "IDX_publishable_key_id_-1d67bae40" ON public.publishable_api_key_sales_channel USING btree (publishable_key_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: IDX_rbac_role_id_-85069d44; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX "IDX_rbac_role_id_-85069d44" ON public.invite_rbac_role USING btree (rbac_role_id) WHERE (deleted_at IS NULL);
 
 
 --
@@ -10198,5 +10289,5 @@ ALTER TABLE ONLY public.store_locale
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 7x58QJbcSBgZHs0xeTX0gO2hVUjCLVtZvfT6pynEoZ2sVUDXcpLKgj3fHhNVtEA
+\unrestrict 1u7MVEJeLLTePztgCuh3r8dKTykvNMvAlvkAwvz8sj0KQJ1gaDWsmzvG2tQTT0z
 
