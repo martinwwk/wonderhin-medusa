@@ -73,3 +73,32 @@ docker exec -it medusa_postgres psql -U postgres -c "CREATE DATABASE \"medusa-st
 docker exec -i medusa_postgres psql -U postgres -d medusa-store < backup.sql
 
 ```
+
+
+### Medusa Modules
+#### Product Type
+Product Type 是產品的分類標籤，用簡單的字符串值來標識產品類型，例如 "T-Shirt"、"Shoes" 或 "Electronics"。它主要用於過濾和搜尋產品，一個產品可以屬於一個 type，且通常在建立產品時動態創建或選擇。
+
+#### Product Category
+Product Category 是階層式的分類系統，支持父子嵌套結構（如 Women > Tops > T-Shirt），幫助客戶導航並過濾產品。一個產品可以屬於多個類別，並可設定排名優先級，主要用於店面瀏覽和分類管理。
+​
+#### Product Collection
+Product Collection 是行銷導向的產品群組，用來集合具有共同主題的產品（如 "Summer Sale" 或 "New Arrivals"），不支持嵌套。一個產品通常只屬於一個 collection，主要用於促銷或特色展示。
+
+
+手作布袋的例子
+假設產品「手作帆布袋」（title: "Handmade Canvas Tote"）：
+Product Type: "Bag" – 用於基本類型過濾。
+​Product Category: "Accessories > Bags > Tote Bags" – 階層式導航路徑。
+​Product Collection: "Summer Handcrafts" – 促銷群組，如夏季手作系列。
+​Product Tags: ["handmade", "organic", "beach"] – 多標籤用於精準搜尋，如搜 "handmade" 即可找到。
+​
+
+手鏈的例子
+假設產品「銀質手鏈」（title: "Sterling Silver Bracelet"）：
+Product Type: "Jewelry" – 產品基本類型。
+​Product Category: "Jewelry > Bracelets > Silver" – 分層瀏覽分類。
+​Product Collection: "New Arrivals" – 新品展示群組。
+​roduct Tags: ["silver", "minimalist", "gift"] – 支援多重過濾，如搜 "gift" 顯示禮物相關商品。
+​
+這些分類互補使用：Type/Category 結構化組織，Collection 行銷導向，Tags 提供彈性標記，提升店面搜尋和導航體驗

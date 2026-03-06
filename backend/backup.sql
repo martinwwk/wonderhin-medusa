@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict rbYZxYYmZzkyJQecotUsJIRCefRg1yEsv19MicdqpqdyR0nalUojBigOjqhbxiQ
+\restrict 7x58QJbcSBgZHs0xeTX0gO2hVUjCLVtZvfT6pynEoZ2sVUDXcpLKgj3fHhNVtEA
 
 -- Dumped from database version 15.15
 -- Dumped by pg_dump version 15.15
@@ -4720,7 +4720,7 @@ refr_01KEXP5M052QPRYZCMVJ0P14P8	Pricing Error	Refund to correct an overcharge, m
 COPY public.region (id, name, currency_code, metadata, created_at, updated_at, deleted_at, automatic_taxes) FROM stdin;
 reg_01KFCJ3P2TEK5Z4P62KBVTAZ3P	Hong Kong	hkd	\N	2026-01-20 02:00:32.605+00	2026-01-20 02:00:32.605+00	\N	f
 reg_01KEXP5SG4F1K07ZVNJBQR30FT	Europe	eur	\N	2026-01-14 07:22:59.464+00	2026-02-11 07:49:01.597+00	2026-02-11 07:49:01.597+00	t
-reg_01KH7SJBVW27CE31NJWETDPNN3	Europe	eur	\N	2026-02-12 02:06:05.184+00	2026-02-12 02:06:05.184+00	\N	t
+reg_01KH7SJBVW27CE31NJWETDPNN3	Europe	eur	\N	2026-02-12 02:06:05.184+00	2026-03-06 08:05:23.819+00	2026-03-06 08:05:23.819+00	t
 \.
 
 
@@ -4972,13 +4972,13 @@ ye	yem	887	YEMEN	Yemen	\N	\N	2026-01-14 07:22:56.51+00	2026-01-14 07:22:56.51+00
 zm	zmb	894	ZAMBIA	Zambia	\N	\N	2026-01-14 07:22:56.51+00	2026-01-14 07:22:56.51+00	\N
 zw	zwe	716	ZIMBABWE	Zimbabwe	\N	\N	2026-01-14 07:22:56.51+00	2026-01-14 07:22:56.51+00	\N
 ax	ala	248	ÅLAND ISLANDS	Åland Islands	\N	\N	2026-01-14 07:22:56.51+00	2026-01-14 07:22:56.51+00	\N
-dk	dnk	208	DENMARK	Denmark	reg_01KH7SJBVW27CE31NJWETDPNN3	\N	2026-01-14 07:22:56.508+00	2026-02-12 02:06:05.184+00	\N
-fr	fra	250	FRANCE	France	reg_01KH7SJBVW27CE31NJWETDPNN3	\N	2026-01-14 07:22:56.509+00	2026-02-12 02:06:05.184+00	\N
-de	deu	276	GERMANY	Germany	reg_01KH7SJBVW27CE31NJWETDPNN3	\N	2026-01-14 07:22:56.509+00	2026-02-12 02:06:05.184+00	\N
-it	ita	380	ITALY	Italy	reg_01KH7SJBVW27CE31NJWETDPNN3	\N	2026-01-14 07:22:56.509+00	2026-02-12 02:06:05.185+00	\N
-es	esp	724	SPAIN	Spain	reg_01KH7SJBVW27CE31NJWETDPNN3	\N	2026-01-14 07:22:56.509+00	2026-02-12 02:06:05.184+00	\N
-se	swe	752	SWEDEN	Sweden	reg_01KH7SJBVW27CE31NJWETDPNN3	\N	2026-01-14 07:22:56.509+00	2026-02-12 02:06:05.185+00	\N
-gb	gbr	826	UNITED KINGDOM	United Kingdom	reg_01KH7SJBVW27CE31NJWETDPNN3	\N	2026-01-14 07:22:56.51+00	2026-02-12 02:06:05.184+00	\N
+se	swe	752	SWEDEN	Sweden	\N	\N	2026-01-14 07:22:56.509+00	2026-03-06 08:04:08.909+00	\N
+es	esp	724	SPAIN	Spain	\N	\N	2026-01-14 07:22:56.509+00	2026-03-06 08:04:15.202+00	\N
+it	ita	380	ITALY	Italy	\N	\N	2026-01-14 07:22:56.509+00	2026-03-06 08:04:21.191+00	\N
+de	deu	276	GERMANY	Germany	\N	\N	2026-01-14 07:22:56.509+00	2026-03-06 08:04:26.806+00	\N
+fr	fra	250	FRANCE	France	\N	\N	2026-01-14 07:22:56.509+00	2026-03-06 08:04:30.887+00	\N
+dk	dnk	208	DENMARK	Denmark	\N	\N	2026-01-14 07:22:56.508+00	2026-03-06 08:04:35.768+00	\N
+gb	gbr	826	UNITED KINGDOM	United Kingdom	\N	\N	2026-01-14 07:22:56.51+00	2026-03-06 08:05:10.171+00	\N
 \.
 
 
@@ -4989,7 +4989,7 @@ gb	gbr	826	UNITED KINGDOM	United Kingdom	reg_01KH7SJBVW27CE31NJWETDPNN3	\N	2026-
 COPY public.region_payment_provider (region_id, payment_provider_id, id, created_at, updated_at, deleted_at) FROM stdin;
 reg_01KFCJ3P2TEK5Z4P62KBVTAZ3P	pp_system_default	regpp_01KFCJ3P365XDT0FA4N3ZZ9DZP	2026-01-20 02:00:32.613893+00	2026-01-20 02:00:32.613893+00	\N
 reg_01KEXP5SG4F1K07ZVNJBQR30FT	pp_system_default	regpp_01KEXP5SGK0NS49TXNT4JQJ2YP	2026-01-14 07:22:59.475177+00	2026-02-11 07:49:01.604+00	2026-02-11 07:49:01.603+00
-reg_01KH7SJBVW27CE31NJWETDPNN3	pp_system_default	regpp_01KH7SJBWCFXZBY5ZGF6XRRQD9	2026-02-12 02:06:05.195939+00	2026-02-12 02:06:05.195939+00	\N
+reg_01KH7SJBVW27CE31NJWETDPNN3	pp_system_default	regpp_01KH7SJBWCFXZBY5ZGF6XRRQD9	2026-02-12 02:06:05.195939+00	2026-03-06 08:05:23.827+00	2026-03-06 08:05:23.826+00
 \.
 
 
@@ -5153,8 +5153,8 @@ store_01KEXP5SENWJTQZFTYXZQWFDX5	Medusa Store	sc_01KEXP5SEB2P87PM49V5A9WTA8	reg_
 --
 
 COPY public.store_currency (id, currency_code, is_default, store_id, created_at, updated_at, deleted_at) FROM stdin;
-stocur_01KJ0BSDEW1B7R8JDSG40XPJHP	eur	t	store_01KEXP5SENWJTQZFTYXZQWFDX5	2026-02-21 15:06:16.920296+00	2026-02-21 15:06:16.920296+00	\N
-stocur_01KJ0BSDEWFW4K3XZ8VM77EMV5	usd	f	store_01KEXP5SENWJTQZFTYXZQWFDX5	2026-02-21 15:06:16.920296+00	2026-02-21 15:06:16.920296+00	\N
+stocur_01KK111Z803SGGPX4MG0E3XPBW	hkd	t	store_01KEXP5SENWJTQZFTYXZQWFDX5	2026-03-06 07:33:39.198718+00	2026-03-06 07:33:39.198718+00	\N
+stocur_01KK111Z8054T3CG9HW3CE3K9R	usd	f	store_01KEXP5SENWJTQZFTYXZQWFDX5	2026-03-06 07:33:39.198718+00	2026-03-06 07:33:39.198718+00	\N
 \.
 
 
@@ -5217,6 +5217,12 @@ trans_01KFZ9SZ57T6BQQ17G3A0DVEDN	01KFAD2WXX5QCGG5A12TG6N9TH	brand	zh-TW	{"name":
 trans_01KFZ9SZ57RHMBQYRD8S08YDS1	01KFAFZZR8536Y5GQM4BAA3K6K	brand	zh-TW	{"name": "宜家"}	2026-01-27 08:40:59.815+00	2026-01-27 08:40:59.815+00	\N	1
 trans_01KFZ9SZ57GKYM2224DBV9A27N	01KFCR0V2MC2XZHHXNAYJP64ZG	brand	zh-TW	{"name": "國泰"}	2026-01-27 08:40:59.815+00	2026-01-27 08:40:59.815+00	\N	1
 trans_01KH5PNVVKSJE6S5N10AV2E37E	prod_01KH5AEZE0APZ33X6WEET8PT9J	product	zh-TW	{"title": "和風Lunch棉袋 (櫻花盛放 🌸 )", "material": "", "subtitle": "", "description": "和風Lunch 棉袋 🎏全新Summer系列☀️\\n\\n小袋子大容量\\n遠看就像拿著粽子般可愛 銀包、紙巾、唇膏、手機，通通都有容身之所 外出午飯時就怕周圍跌 | 同事羨慕之選\\n尺寸:32cm W x 34cm H"}	2026-02-11 06:37:05.267+00	2026-02-11 06:37:05.267+00	\N	2
+trans_01KJYN795ZYPHZ7C096NW23TJ2	pcat_01KEXP5SKWMG8B1PPMVHXFH15T	product_category	zh-TW	{"name": "布袋", "description": ""}	2026-03-05 09:28:21.44+00	2026-03-05 09:28:21.44+00	\N	1
+trans_01KJYN9QT6Z5C8KSKAMF7EJ2H5	pcat_01KEXP5SKX61PP1EYFHQVYKMWZ	product_category	zh-TW	{"name": "電話手腕帶", "description": ""}	2026-03-05 09:29:41.958+00	2026-03-05 09:29:41.958+00	\N	1
+trans_01KJYN9QT670K8JQWWYHE82H7G	pcat_01KEXP5SKXGJ492S8BP9F10QPF	product_category	zh-TW	{"name": "手鏈", "description": ""}	2026-03-05 09:29:41.958+00	2026-03-05 09:29:41.958+00	\N	1
+trans_01KJYN9QT6ESAX8RPD4KW87M4X	pcat_01KEXP5SKXVHK7D5022FDF0XKY	product_category	zh-TW	{"name": "頸鏈", "description": ""}	2026-03-05 09:29:41.958+00	2026-03-05 09:29:41.958+00	\N	1
+trans_01KJYN9QT66FNVDC0CY63ZFW0T	pcat_01KH59MWTZR8VH1B0S2YJW7VGY	product_category	zh-TW	{"name": "印度布系列", "description": ""}	2026-03-05 09:29:41.958+00	2026-03-05 09:29:41.958+00	\N	1
+trans_01KJYN9QT6R8Y054YR915GZ8G5	pcat_01KH59NSWKYYYJ366X7FVZG9W5	product_category	zh-TW	{"name": "Lunch袋", "description": ""}	2026-03-05 09:29:41.958+00	2026-03-05 09:29:41.958+00	\N	1
 \.
 
 
@@ -5287,7 +5293,7 @@ COPY public.workflow_execution (id, workflow_id, transaction_id, execution, cont
 -- Name: link_module_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.link_module_migrations_id_seq', 1577, true);
+SELECT pg_catalog.setval('public.link_module_migrations_id_seq', 1703, true);
 
 
 --
@@ -9461,7 +9467,7 @@ CREATE INDEX "IDX_workflow_execution_transaction_id" ON public.workflow_executio
 -- Name: IDX_workflow_execution_updated_at_retention_time; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX "IDX_workflow_execution_updated_at_retention_time" ON public.workflow_execution USING btree (updated_at, retention_time) WHERE ((deleted_at IS NULL) AND (retention_time IS NOT NULL) AND ((state)::text = ANY ((ARRAY['done'::character varying, 'failed'::character varying, 'reverted'::character varying])::text[])));
+CREATE INDEX "IDX_workflow_execution_updated_at_retention_time" ON public.workflow_execution USING btree (updated_at, retention_time) WHERE ((deleted_at IS NULL) AND (retention_time IS NOT NULL) AND ((state)::text = ANY (ARRAY[('done'::character varying)::text, ('failed'::character varying)::text, ('reverted'::character varying)::text])));
 
 
 --
@@ -10192,5 +10198,5 @@ ALTER TABLE ONLY public.store_locale
 -- PostgreSQL database dump complete
 --
 
-\unrestrict rbYZxYYmZzkyJQecotUsJIRCefRg1yEsv19MicdqpqdyR0nalUojBigOjqhbxiQ
+\unrestrict 7x58QJbcSBgZHs0xeTX0gO2hVUjCLVtZvfT6pynEoZ2sVUDXcpLKgj3fHhNVtEA
 
