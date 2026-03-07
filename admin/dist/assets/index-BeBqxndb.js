@@ -1,0 +1,1 @@
+import{u as e,f as a,r as n,j as o,O as r}from"./index-BMbdfg1a.js";const c=()=>{const t=e(),s=a();return n.useEffect(()=>{s.pathname==="/settings"&&t("/settings/store",{replace:!0})},[s.pathname,t]),o.jsx(r,{})};export{c as Component};

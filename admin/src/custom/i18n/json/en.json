@@ -1,0 +1,56 @@
+{
+  "brands": {
+    "title": "Brands",
+    "create": "Create",
+    "edit": "Edit Brand",
+    "createTitle": "Create Brand",
+    "name": "Name",
+    "namePlaceholder": "Enter brand name",
+    "actions": "Actions",
+    "cancel": "Cancel",
+    "update": "Update",
+    "menu": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "delete": {
+      "title": "Are you sure?",
+      "description": "You are about to delete the brand {{name}}. This action cannot be undone."
+    },
+    "toast": {
+      "created": "Brand created successfully",
+      "updated": "Brand updated successfully",
+      "deleted": "Brand deleted successfully",
+      "createError": "Failed to create brand",
+      "updateError": "Failed to update brand",
+      "deleteError": "Failed to delete brand",
+      "nameRequired": "Brand name is required"
+    }
+  },
+  "categoryMedia": {
+    "title": "Media",
+    "addImage": "Add image",
+    "thumbnail": "Thumbnail",
+    "loading": "Loading...",
+    "uploadArea": "Click or drag and drop to upload images",
+    "uploadHint": "JPG, PNG, GIF, WEBP, or SVG. Max 10MB.",
+    "uploading": "Uploading...",
+    "dropMore": "Drop or click to add more images",
+    "replace": "Replace image",
+    "cancel": "Cancel",
+    "delete": {
+      "title": "Remove image?",
+      "description": "This will remove this image from the category. This action cannot be undone.",
+      "confirm": "Remove"
+    },
+    "toast": {
+      "uploaded": "Image uploaded successfully",
+      "uploadError": "Failed to upload image",
+      "removed": "Image removed successfully",
+      "removeError": "Failed to remove image",
+      "invalidType": "Invalid file type. Please upload an image file.",
+      "fileTooLarge": "File is too large. Maximum size is 10MB.",
+      "thumbnailSet": "Thumbnail set successfully"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "brands": {
+    "title": "品牌",
+    "create": "建立",
+    "edit": "編輯品牌",
+    "createTitle": "創建品牌",
+    "name": "名稱",
+    "namePlaceholder": "輸入品牌名稱",
+    "actions": "操作",
+    "cancel": "取消",
+    "update": "更新",
+    "menu": {
+      "edit": "編輯",
+      "delete": "刪除"
+    },
+    "delete": {
+      "title": "您確定嗎？",
+      "description": "您即將刪除品牌 {{name}}。此操作無法復原。"
+    },
+    "toast": {
+      "created": "品牌創建成功",
+      "updated": "品牌更新成功",
+      "deleted": "品牌刪除成功",
+      "createError": "創建品牌失敗",
+      "updateError": "更新品牌失敗",
+      "deleteError": "刪除品牌失敗",
+      "nameRequired": "品牌名稱為必填項"
+    }
+  },
+  "categoryMedia": {
+    "title": "媒體",
+    "addImage": "新增圖片",
+    "thumbnail": "縮圖",
+    "loading": "載入中...",
+    "uploadArea": "點擊或拖放以上傳圖片",
+    "uploadHint": "JPG、PNG、GIF、WEBP 或 SVG，最大 10MB。",
+    "uploading": "上傳中...",
+    "dropMore": "拖放或點擊以新增更多圖片",
+    "replace": "替換圖片",
+    "cancel": "取消",
+    "delete": {
+      "title": "移除圖片？",
+      "description": "這將從此分類中移除此圖片。此操作無法復原。",
+      "confirm": "移除"
+    },
+    "toast": {
+      "uploaded": "圖片上傳成功",
+      "uploadError": "圖片上傳失敗",
+      "removed": "圖片移除成功",
+      "removeError": "圖片移除失敗",
+      "invalidType": "檔案類型無效，請上傳圖片檔案。",
+      "fileTooLarge": "檔案過大，最大不超過 10MB。",
+      "thumbnailSet": "縮圖設定成功"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "name": "medusa-monorepo",
   "private": true,
-  "workspaces": ["backend", "storefront"],
+  "workspaces": ["backend", "storefront", "admin"],
   "packageManager": "yarn@1.22.22",
   "scripts": {
     "install:all": "yarn install",
