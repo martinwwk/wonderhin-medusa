@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r \"AdminBatchTranslations\" /Users/martinwang/git/merrymack/develop/wonderhin-medusa/node_modules/@medusajs/types/dist/*.d.ts 2>/dev/null | head -5)",
+      "WebSearch",
+      "Bash(grep -r \"translation.batch\" node_modules/@medusajs/js-sdk/dist/*.d.ts 2>/dev/null | head -10)",
+      "Bash(cd /Users/martinwang/git/merrymack/develop/wonderhin-medusa/admin && npm run build 2>&1 | grep -E \"localized-description|edit-product-form|product-create-general-section|product-create-form\" | head -20)",
+      "Bash(npm run:*)"
+    ]
+  }
+}

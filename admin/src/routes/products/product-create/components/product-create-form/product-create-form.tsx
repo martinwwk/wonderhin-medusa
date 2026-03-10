@@ -10,6 +10,7 @@ import {
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form"
 import { useExtendableForm } from "../../../../../dashboard-app/forms/hooks"
 import { useCreateProduct } from "../../../../../hooks/api/products"
+import { useBatchTranslations } from "../../../../../hooks/api/translations"
 import { sdk } from "../../../../../lib/client"
 import { useExtension } from "../../../../../providers/extension-provider"
 import {
@@ -66,12 +67,22 @@ export const ProductCreateForm = ({
       sales_channels: defaultChannel
         ? [{ id: defaultChannel.id, name: defaultChannel.name }]
         : [],
+      description: { en: "" },
     },
     schema: ProductCreateSchema,
     configs,
   })
 
   const { mutateAsync, isPending } = useCreateProduct()
+  const batchTranslations = useBatchTranslations("product")
+
+  // Get available locales from store
+  const availableLocales = useMemo(() => {
+    return store?.supported_locales?.map((locale: any) => ({
+      code: locale.locale_code || locale.code,
+      name: locale.name || locale.locale_code?.toUpperCase() || "Unknown",
+    })) || [{ code: "en", name: "English" }]
+  }, [store])
 
   const regionsCurrencyMap = useMemo(() => {
     if (!regions?.length) {
@@ -152,7 +163,28 @@ export const ProductCreateForm = ({
         regionsCurrencyMap,
       }),
       {
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
+          // Save translations for non-English locales
+          const description = values.description
+          if (description && typeof description === "object") {
+            const translationUpdates = availableLocales
+              .filter((locale) => locale.code !== "en")
+              .map((locale) => ({
+                reference_id: data.product.id,
+                reference: "product",
+                locale: locale.code,
+                field: "description",
+                value: description[locale.code] || "",
+              }))
+              .filter((tr) => tr.value) // Only include translations with values
+
+            if (translationUpdates.length > 0) {
+              await batchTranslations.mutateAsync({
+                update: translationUpdates,
+              } as any)
+            }
+          }
+
           toast.success(
             t("products.create.successToast", {
               title: data.product.title,

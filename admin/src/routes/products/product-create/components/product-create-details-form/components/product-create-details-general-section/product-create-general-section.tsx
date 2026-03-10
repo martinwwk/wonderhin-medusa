@@ -1,9 +1,12 @@
-import { Input, Textarea } from "@medusajs/ui"
+import { Input } from "@medusajs/ui"
 import { UseFormReturn } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import { useMemo } from "react"
 
 import { Form } from "../../../../../../../components/common/form"
+import { LocalizedDescription } from "../../../../../../../components/common/localized-description"
 import { HandleInput } from "../../../../../../../components/inputs/handle-input"
+import { useStore } from "../../../../../../../hooks/api"
 import { ProductCreateSchemaType } from "../../../../types"
 
 type ProductCreateGeneralSectionProps = {
@@ -14,6 +17,17 @@ export const ProductCreateGeneralSection = ({
   form,
 }: ProductCreateGeneralSectionProps) => {
   const { t } = useTranslation()
+
+  // Fetch store locales
+  const { store } = useStore()
+
+  // Get available locales
+  const availableLocales = useMemo(() => {
+    return store?.supported_locales?.map((locale: any) => ({
+      code: locale.locale_code || locale.code,
+      name: locale.name || locale.locale_code?.toUpperCase() || "Unknown",
+    })) || [{ code: "en", name: "English" }]
+  }, [store])
 
   return (
     <div id="general" className="flex flex-col gap-y-6">
@@ -70,21 +84,12 @@ export const ProductCreateGeneralSection = ({
           />
         </div>
       </div>
-      <Form.Field
+      <LocalizedDescription
         control={form.control}
         name="description"
-        render={({ field }) => {
-          return (
-            <Form.Item>
-              <Form.Label optional>
-                {t("products.fields.description.label")}
-              </Form.Label>
-              <Form.Control>
-                <Textarea {...field} placeholder={t("products.fields.description.placeholder")} />
-              </Form.Control>
-            </Form.Item>
-          )
-        }}
+        availableLocales={availableLocales}
+        label={t("products.fields.description.label")}
+        placeholder={t("products.fields.description.placeholder")}
       />
     </div>
   )

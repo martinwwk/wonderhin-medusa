@@ -1,12 +1,16 @@
 import { GlobeEurope, PencilSquare, Trash } from "@medusajs/icons"
 import { HttpTypes } from "@medusajs/types"
 import { Container, Heading, StatusBadge, toast, usePrompt } from "@medusajs/ui"
+import * as Tabs from "@radix-ui/react-tabs"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
+import { useMemo, useState } from "react"
 
 import { ActionMenu } from "../../../../../components/common/action-menu"
 import { SectionRow } from "../../../../../components/common/section"
 import { useDeleteProduct } from "../../../../../hooks/api/products"
+import { useStore } from "../../../../../hooks/api/store"
+import { useReferenceTranslations } from "../../../../../hooks/api/translations"
 import { useExtension } from "../../../../../providers/extension-provider"
 import { useFeatureFlag } from "../../../../../providers/feature-flag-provider"
 
@@ -37,6 +41,60 @@ export const ProductGeneralSection = ({
   const navigate = useNavigate()
   const { getDisplays } = useExtension()
   const isTranslationsEnabled = useFeatureFlag("translation")
+  const [activeLocale, setActiveLocale] = useState("en")
+
+  // Fetch store locales
+  const { store } = useStore()
+
+  // Fetch translations for this product
+  const { translations } = useReferenceTranslations("product", product.id, {
+    enabled: isTranslationsEnabled,
+  })
+
+  // Get available locales sorted with English first
+  const availableLocales = useMemo(() => {
+    const locales = store?.supported_locales || []
+    const enLocale = locales.find((l: any) => (l.locale_code || l.code) === "en")
+    const otherLocales = locales.filter((l: any) => (l.locale_code || l.code) !== "en")
+    return enLocale ? [enLocale, ...otherLocales] : otherLocales
+  }, [store])
+
+  // Get locale display name
+  const getLocaleName = (locale: any) => {
+    const code = locale.locale_code || locale.code
+    return locale.name || (code === "en" ? "English" : code.toUpperCase())
+  }
+
+  // Get translations map for current product
+  const translationsMap = useMemo(() => {
+    if (!translations) return {}
+    const map: Record<string, Record<string, string>> = {}
+    translations
+      .filter((tr: any) => (tr as any).field === "description" || (tr as any).field === "title")
+      .forEach((tr: any) => {
+        const locale = (tr as any).locale_code // Use locale_code not locale
+        const field = (tr as any).field
+        if (!map[locale]) map[locale] = {}
+        map[locale][field] = (tr as any).value
+      })
+    return map
+  }, [translations])
+
+  // Get description for active locale
+  const getDescription = (locale: string) => {
+    if (locale === "en") {
+      return product.description || ""
+    }
+    return translationsMap[locale]?.description || ""
+  }
+
+  // Get title for active locale
+  const getTitle = (locale: string) => {
+    if (locale === "en") {
+      return product.title
+    }
+    return translationsMap[locale]?.title || product.title
+  }
 
   const displays = getDisplays("product", "general")
 
@@ -70,8 +128,34 @@ export const ProductGeneralSection = ({
 
   return (
     <Container className="divide-y p-0">
+      {/* Language Tabs - at the top */}
+      {isTranslationsEnabled && (
+        <Tabs.Root value={activeLocale} onValueChange={setActiveLocale}>
+          <Tabs.List className="flex px-6 border-b border-ui-border-base">
+            <Tabs.Trigger
+              key="en"
+              value="en"
+              className="-mb-px border-b-2 border-transparent pb-3 pt-4 text-sm font-medium text-ui-fg-subtle hover:text-ui-fg-base data-[state=active]:border-ui-fg-base data-[state=active]:text-ui-fg-base mr-4 outline-none"
+            >
+              English
+            </Tabs.Trigger>
+            {availableLocales
+              .filter((locale: any) => (locale.locale_code || locale.code) !== "en")
+              .map((locale: any) => (
+                <Tabs.Trigger
+                  key={locale.locale_code || locale.code}
+                  value={locale.locale_code || locale.code}
+                  className="-mb-px border-b-2 border-transparent pb-3 pt-4 text-sm font-medium text-ui-fg-subtle hover:text-ui-fg-base data-[state=active]:border-ui-fg-base data-[state=active]:text-ui-fg-base mr-4 outline-none"
+                >
+                  {getLocaleName(locale)}
+                </Tabs.Trigger>
+              ))}
+          </Tabs.List>
+        </Tabs.Root>
+      )}
+
       <div className="flex items-center justify-between px-6 py-4">
-        <Heading>{product.title}</Heading>
+        <Heading>{getTitle(activeLocale)}</Heading>
         <div className="flex items-center gap-x-4">
           <StatusBadge color={productStatusColor(product.status)}>
             {t(`products.productStatus.${product.status}`)}
@@ -82,7 +166,7 @@ export const ProductGeneralSection = ({
                 actions: [
                   {
                     label: t("actions.edit"),
-                    to: "edit",
+                    to: `edit?locale=${activeLocale}`,
                     icon: <PencilSquare />,
                   },
                 ],
@@ -114,7 +198,7 @@ export const ProductGeneralSection = ({
         </div>
       </div>
 
-      <SectionRow title={t("fields.description")} value={product.description} />
+      <SectionRow title={t("fields.description")} value={getDescription(activeLocale)} />
       <SectionRow title={t("fields.subtitle")} value={product.subtitle} />
       <SectionRow title={t("fields.handle")} value={`/${product.handle}`} />
       <SectionRow title={t("fields.material")} value={product.material} />

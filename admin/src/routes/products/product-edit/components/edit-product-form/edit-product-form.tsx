@@ -7,16 +7,19 @@ import { Form } from "../../../../../components/common/form"
 import { SwitchBox } from "../../../../../components/common/switch-box"
 import { RouteDrawer, useRouteModal } from "../../../../../components/modals"
 import { useExtendableForm } from "../../../../../dashboard-app/forms/hooks"
-import { useUpdateProduct } from "../../../../../hooks/api/products"
+import { useStore, useUpdateProduct } from "../../../../../hooks/api"
+import { useReferenceTranslations, useBatchTranslations } from "../../../../../hooks/api/translations"
 import { transformNullableFormData } from "../../../../../lib/form-helpers"
 
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form"
 import { FormExtensionZone } from "../../../../../dashboard-app"
 import { useExtension } from "../../../../../providers/extension-provider"
 import { useDocumentDirection } from "../../../../../hooks/use-document-direction"
+import { useMemo } from "react"
 
 type EditProductFormProps = {
   product: HttpTypes.AdminProduct
+  locale?: string
 }
 
 const EditProductSchema = zod.object({
@@ -29,7 +32,7 @@ const EditProductSchema = zod.object({
   discountable: zod.boolean(),
 })
 
-export const EditProductForm = ({ product }: EditProductFormProps) => {
+export const EditProductForm = ({ product, locale = "en" }: EditProductFormProps) => {
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
   const direction = useDocumentDirection()
@@ -37,14 +40,53 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
   const fields = getFormFields("product", "edit")
   const configs = getFormConfigs("product", "edit")
 
+  // Fetch store locales
+  const { store } = useStore()
+
+  // Get locale name for display
+  const localeName = useMemo(() => {
+    if (locale === "en") return "English"
+    const storeLocale = store?.supported_locales?.find((l: any) => (l.locale_code || l.code) === locale)
+    return (storeLocale as any)?.name || locale.toUpperCase()
+  }, [store, locale])
+
+  // Fetch existing translations for this product
+  const { translations: existingTranslations } = useReferenceTranslations(
+    "product",
+    product.id
+  )
+
+  // Get description for the current locale
+  const descriptionForLocale = useMemo(() => {
+    if (locale === "en") {
+      return product.description || ""
+    }
+    // Find translation for this locale - use locale_code not locale
+    const translation = existingTranslations?.find(
+      (tr: any) => (tr as any).field === "description" && (tr as any).locale_code === locale
+    )
+    return (translation as any)?.value || ""
+  }, [product.description, existingTranslations, locale])
+
+  // Get title for the current locale
+  const titleForLocale = useMemo(() => {
+    if (locale === "en") {
+      return product.title
+    }
+    const translation = existingTranslations?.find(
+      (tr: any) => (tr as any).field === "title" && (tr as any).locale_code === locale
+    )
+    return (translation as any)?.value || product.title
+  }, [product.title, existingTranslations, locale])
+
   const form = useExtendableForm({
     defaultValues: {
       status: product.status,
-      title: product.title,
+      title: titleForLocale,
       material: product.material || "",
       subtitle: product.subtitle || "",
       handle: product.handle || "",
-      description: product.description || "",
+      description: descriptionForLocale,
       discountable: product.discountable,
     },
     schema: EditProductSchema,
@@ -53,32 +95,75 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
   })
 
   const { mutateAsync, isPending } = useUpdateProduct(product.id)
+  const batchTranslations = useBatchTranslations("product")
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    const { title, discountable, handle, status, ...optional } = data
+    const { title, discountable, handle, status, description, ...optional } = data
 
-    const nullableData = transformNullableFormData(optional)
+    if (locale === "en") {
+      // For English, save directly to product
+      const nullableData = transformNullableFormData({
+        ...optional,
+        description,
+      })
 
-    await mutateAsync(
-      {
-        title,
-        discountable,
-        handle,
-        status: status as HttpTypes.AdminProductStatus,
-        ...nullableData,
-      },
-      {
-        onSuccess: ({ product }) => {
-          toast.success(
-            t("products.edit.successToast", { title: product.title })
-          )
-          handleSuccess()
+      await mutateAsync(
+        {
+          title,
+          discountable,
+          handle,
+          status: status as HttpTypes.AdminProductStatus,
+          ...nullableData,
         },
-        onError: (e) => {
-          toast.error(e.message)
+        {
+          onSuccess: ({ product }) => {
+            toast.success(
+              t("products.edit.successToast", { title: product.title })
+            )
+            handleSuccess()
+          },
+          onError: (e) => {
+            toast.error(e.message)
+          },
+        }
+      )
+    } else {
+      // For other locales, save to product first, then save translation
+      const nullableData = transformNullableFormData(optional)
+
+      await mutateAsync(
+        {
+          title,
+          discountable,
+          handle,
+          status: status as HttpTypes.AdminProductStatus,
+          ...nullableData,
         },
-      }
-    )
+        {
+          onSuccess: async ({ product }) => {
+            // Save translation for this locale
+            await batchTranslations.mutateAsync({
+              update: [
+                {
+                  reference_id: product.id,
+                  reference: "product",
+                  locale: locale,
+                  field: "description",
+                  value: description || "",
+                },
+              ],
+            } as any)
+            toast.success(
+              t("products.edit.successToast", { title: product.title })
+            )
+            handleSuccess()
+          },
+          onError: (e) => {
+            toast.error(e.message)
+          },
+        }
+      )
+    }
   })
 
   return (
@@ -208,7 +293,7 @@ export const EditProductForm = ({ product }: EditProductFormProps) => {
                   return (
                     <Form.Item>
                       <Form.Label optional>
-                        {t("fields.description")}
+                        {t("fields.description")} ({localeName})
                       </Form.Label>
                       <Form.Control>
                         <Textarea {...field} />

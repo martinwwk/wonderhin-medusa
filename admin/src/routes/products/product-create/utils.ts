@@ -35,7 +35,9 @@ export const normalizeProductFormValues = (
     thumbnail,
     title: values.title.trim(),
     subtitle: values.subtitle?.trim(),
-    description: values.description?.trim(),
+    description: typeof values.description === "string"
+      ? values.description?.trim()
+      : values.description?.["en"]?.trim() || "",
     discountable: values.discountable,
     width: values.width ? parseFloat(values.width) : undefined,
     length: values.length ? parseFloat(values.length) : undefined,

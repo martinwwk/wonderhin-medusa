@@ -60,7 +60,7 @@ export const ProductCreateSchema = z
     title: z.string().min(1),
     subtitle: z.string().optional(),
     handle: z.string().optional(),
-    description: z.string().optional(),
+    description: z.record(z.string(), z.string()).optional(),
     discountable: z.boolean(),
     type_id: z.string().optional(),
     collection_id: z.string().optional(),

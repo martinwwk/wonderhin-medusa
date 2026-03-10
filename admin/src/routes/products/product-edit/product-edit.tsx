@@ -1,6 +1,6 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router-dom"
+import { useParams, useSearchParams } from "react-router-dom"
 
 import { RouteDrawer } from "../../../components/modals"
 import { useProduct } from "../../../hooks/api/products"
@@ -8,6 +8,8 @@ import { EditProductForm } from "./components/edit-product-form"
 
 export const ProductEdit = () => {
   const { id } = useParams()
+  const [searchParams] = useSearchParams()
+  const locale = searchParams.get("locale") || "en"
   const { t } = useTranslation()
 
   const { product, isLoading, isError, error } = useProduct(id!, {
@@ -30,7 +32,7 @@ export const ProductEdit = () => {
           {t("products.edit.description")}
         </RouteDrawer.Description>
       </RouteDrawer.Header>
-      {!isLoading && product && <EditProductForm product={product} />}
+      {!isLoading && product && <EditProductForm product={product} locale={locale} />}
     </RouteDrawer>
   )
 }
