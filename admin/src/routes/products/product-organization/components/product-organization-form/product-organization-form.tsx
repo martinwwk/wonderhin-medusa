@@ -15,7 +15,7 @@ import { useUpdateProduct } from "../../../../../hooks/api/products"
 import { useComboboxData } from "../../../../../hooks/use-combobox-data"
 import { sdk } from "../../../../../lib/client"
 import { useExtension } from "../../../../../providers/extension-provider"
-import { CategoryCombobox } from "../../../common/components/category-combobox"
+import { CategoryCheckboxTree } from "../../../common/components/category-checkbox-tree"
 
 type ProductOrganizationFormProps = {
   product: HttpTypes.AdminProduct
@@ -167,7 +167,7 @@ export const ProductOrganizationForm = ({
                       {t("products.fields.categories.label")}
                     </Form.Label>
                     <Form.Control>
-                      <CategoryCombobox {...field} />
+                      <CategoryCheckboxTree {...field} />
                     </Form.Control>
                     <Form.ErrorMessage />
                   </Form.Item>
