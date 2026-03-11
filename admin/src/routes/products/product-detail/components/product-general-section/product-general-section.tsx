@@ -15,7 +15,7 @@ import { useExtension } from "../../../../../providers/extension-provider"
 import { useFeatureFlag } from "../../../../../providers/feature-flag-provider"
 
 const productStatusColor = (status: string) => {
-  switch (status) {
+  switch (status) { 
     case "draft":
       return "grey"
     case "proposed":
@@ -46,7 +46,7 @@ export const ProductGeneralSection = ({
   // Fetch store locales
   const { store } = useStore()
 
-  // Fetch translations for this product
+  // Fetch translations for this product - use product.updatedAt as key to refetch after edits
   const { translations } = useReferenceTranslations("product", product.id, {
     enabled: isTranslationsEnabled,
   })
@@ -59,24 +59,29 @@ export const ProductGeneralSection = ({
     return enLocale ? [enLocale, ...otherLocales] : otherLocales
   }, [store])
 
-  // Get locale display name
+  // Get locale display name - use locale.locale.name for proper display
   const getLocaleName = (locale: any) => {
     const code = locale.locale_code || locale.code
-    return locale.name || (code === "en" ? "English" : code.toUpperCase())
+    // Try locale.locale.name first (Medusa structure), then fallback to locale.name
+    return locale.locale?.name || locale.name || (code === "en" ? "English" : code.toUpperCase())
   }
 
   // Get translations map for current product
+  // Each translation entry has locale_code and translations object containing all field values
   const translationsMap = useMemo(() => {
     if (!translations) return {}
     const map: Record<string, Record<string, string>> = {}
-    translations
-      .filter((tr: any) => (tr as any).field === "description" || (tr as any).field === "title")
-      .forEach((tr: any) => {
-        const locale = (tr as any).locale_code // Use locale_code not locale
-        const field = (tr as any).field
-        if (!map[locale]) map[locale] = {}
-        map[locale][field] = (tr as any).value
-      })
+    translations.forEach((tr: any) => {
+      const locale = tr.locale_code
+      if (!map[locale]) map[locale] = {}
+      // tr.translations contains all fields: { title: "...", description: "...", subtitle: "...", material: "..." }
+      if (tr.translations) {
+        map[locale] = {
+          ...map[locale],
+          ...tr.translations,
+        }
+      }
+    })
     return map
   }, [translations])
 
@@ -94,6 +99,22 @@ export const ProductGeneralSection = ({
       return product.title
     }
     return translationsMap[locale]?.title || product.title
+  }
+
+  // Get subtitle for active locale
+  const getSubtitle = (locale: string) => {
+    if (locale === "en") {
+      return product.subtitle || ""
+    }
+    return translationsMap[locale]?.subtitle || product.subtitle || ""
+  }
+
+  // Get material for active locale
+  const getMaterial = (locale: string) => {
+    if (locale === "en") {
+      return product.material || ""
+    }
+    return translationsMap[locale]?.material || product.material || ""
   }
 
   const displays = getDisplays("product", "general")
@@ -199,9 +220,9 @@ export const ProductGeneralSection = ({
       </div>
 
       <SectionRow title={t("fields.description")} value={getDescription(activeLocale)} />
-      <SectionRow title={t("fields.subtitle")} value={product.subtitle} />
+      <SectionRow title={t("fields.subtitle")} value={getSubtitle(activeLocale)} />
       <SectionRow title={t("fields.handle")} value={`/${product.handle}`} />
-      <SectionRow title={t("fields.material")} value={product.material} />
+      <SectionRow title={t("fields.material")} value={getMaterial(activeLocale)} />
       <SectionRow
         title={t("fields.discountable")}
         value={product.discountable ? t("fields.true") : t("fields.false")}

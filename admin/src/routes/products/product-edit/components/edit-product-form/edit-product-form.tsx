@@ -8,8 +8,9 @@ import { SwitchBox } from "../../../../../components/common/switch-box"
 import { RouteDrawer, useRouteModal } from "../../../../../components/modals"
 import { useExtendableForm } from "../../../../../dashboard-app/forms/hooks"
 import { useStore, useUpdateProduct } from "../../../../../hooks/api"
-import { useReferenceTranslations, useBatchTranslations } from "../../../../../hooks/api/translations"
+import { useReferenceTranslations, useBatchTranslations, translationEntitiesQueryKeys } from "../../../../../hooks/api/translations"
 import { transformNullableFormData } from "../../../../../lib/form-helpers"
+import { queryClient } from "../../../../../lib/query-client"
 
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form"
 import { FormExtensionZone } from "../../../../../dashboard-app"
@@ -53,38 +54,67 @@ export const EditProductForm = ({ product, locale = "en" }: EditProductFormProps
   // Fetch existing translations for this product
   const { translations: existingTranslations } = useReferenceTranslations(
     "product",
-    product.id
+    product.id,
+    {
+      enabled: locale !== "en", // Only fetch if not English
+    }
   )
+
+  // Build translations map for current product
+  const translationsMap = useMemo(() => {
+    if (!existingTranslations) return {}
+    const map: Record<string, Record<string, string>> = {}
+    existingTranslations.forEach((tr: any) => {
+      const trLocale = tr.locale_code
+      if (!map[trLocale]) map[trLocale] = {}
+      if (tr.translations) {
+        map[trLocale] = {
+          ...map[trLocale],
+          ...tr.translations,
+        }
+      }
+    })
+    return map
+  }, [existingTranslations])
 
   // Get description for the current locale
   const descriptionForLocale = useMemo(() => {
     if (locale === "en") {
       return product.description || ""
     }
-    // Find translation for this locale - use locale_code not locale
-    const translation = existingTranslations?.find(
-      (tr: any) => (tr as any).field === "description" && (tr as any).locale_code === locale
-    )
-    return (translation as any)?.value || ""
-  }, [product.description, existingTranslations, locale])
+    return translationsMap[locale]?.description || ""
+  }, [product.description, translationsMap, locale])
 
   // Get title for the current locale
   const titleForLocale = useMemo(() => {
     if (locale === "en") {
       return product.title
     }
-    const translation = existingTranslations?.find(
-      (tr: any) => (tr as any).field === "title" && (tr as any).locale_code === locale
-    )
-    return (translation as any)?.value || product.title
-  }, [product.title, existingTranslations, locale])
+    return translationsMap[locale]?.title || product.title
+  }, [product.title, translationsMap, locale])
+
+  // Get subtitle for the current locale
+  const subtitleForLocale = useMemo(() => {
+    if (locale === "en") {
+      return product.subtitle || ""
+    }
+    return translationsMap[locale]?.subtitle || product.subtitle || ""
+  }, [product.subtitle, translationsMap, locale])
+
+  // Get material for the current locale
+  const materialForLocale = useMemo(() => {
+    if (locale === "en") {
+      return product.material || ""
+    }
+    return translationsMap[locale]?.material || product.material || ""
+  }, [product.material, translationsMap, locale])
 
   const form = useExtendableForm({
     defaultValues: {
       status: product.status,
       title: titleForLocale,
-      material: product.material || "",
-      subtitle: product.subtitle || "",
+      material: materialForLocale,
+      subtitle: subtitleForLocale,
       handle: product.handle || "",
       description: descriptionForLocale,
       discountable: product.discountable,
@@ -98,12 +128,13 @@ export const EditProductForm = ({ product, locale = "en" }: EditProductFormProps
   const batchTranslations = useBatchTranslations("product")
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    const { title, discountable, handle, status, description, ...optional } = data
+    const { title, discountable, handle, status, description, subtitle, material } = data
 
     if (locale === "en") {
       // For English, save directly to product
       const nullableData = transformNullableFormData({
-        ...optional,
+        subtitle,
+        material,
         description,
       })
 
@@ -117,6 +148,10 @@ export const EditProductForm = ({ product, locale = "en" }: EditProductFormProps
         },
         {
           onSuccess: ({ product }) => {
+            // Invalidate translations queries to refetch updated data
+            queryClient.invalidateQueries({
+              queryKey: translationEntitiesQueryKeys.list({ type: "product", id: product.id }),
+            })
             toast.success(
               t("products.edit.successToast", { title: product.title })
             )
@@ -128,31 +163,64 @@ export const EditProductForm = ({ product, locale = "en" }: EditProductFormProps
         }
       )
     } else {
-      // For other locales, save to product first, then save translation
-      const nullableData = transformNullableFormData(optional)
+      // For other locales, save base product data first, then save translations
+      // For non-English, we don't update the base title/subtitle/material - only description gets translated
+      const baseNullableData = transformNullableFormData({
+        subtitle,
+        material,
+      })
 
       await mutateAsync(
         {
-          title,
+          // Keep original English title, handle, etc.
           discountable,
           handle,
           status: status as HttpTypes.AdminProductStatus,
-          ...nullableData,
+          ...baseNullableData,
         },
         {
           onSuccess: async ({ product }) => {
-            // Save translation for this locale
-            await batchTranslations.mutateAsync({
-              update: [
-                {
-                  reference_id: product.id,
-                  reference: "product",
-                  locale: locale,
-                  field: "description",
-                  value: description || "",
-                },
-              ],
-            } as any)
+            // Save translations for this locale
+            const translationsPayload: Record<string, string> = {}
+            if (title) translationsPayload.title = title
+            if (description) translationsPayload.description = description
+            if (subtitle) translationsPayload.subtitle = subtitle
+            if (material) translationsPayload.material = material
+
+            // Check if translation already exists
+            const existingTranslation = existingTranslations?.find(
+              (tr: any) => tr.locale_code === locale
+            )
+
+            if (existingTranslation?.id) {
+              // Update existing translation
+              await batchTranslations.mutateAsync({
+                update: [
+                  {
+                    id: existingTranslation.id,
+                    translations: translationsPayload,
+                  },
+                ],
+              })
+            } else {
+              // Create new translation
+              await batchTranslations.mutateAsync({
+                create: [
+                  {
+                    reference_id: product.id,
+                    reference: "product",
+                    locale_code: locale,
+                    translations: translationsPayload,
+                  },
+                ],
+              })
+            }
+
+            // Invalidate translations queries to refetch updated data
+            queryClient.invalidateQueries({
+              queryKey: translationEntitiesQueryKeys.list({ type: "product", id: product.id }),
+            })
+
             toast.success(
               t("products.edit.successToast", { title: product.title })
             )

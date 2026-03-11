@@ -1,4 +1,4 @@
-import { PencilSquare, ThumbnailBadge } from "@medusajs/icons"
+import { PencilSquare, ThumbnailBadge, Trash } from "@medusajs/icons"
 import {
   Button,
   Checkbox,
@@ -102,45 +102,92 @@ export const ProductMediaSection = ({ product }: ProductMedisaSectionProps) => {
         />
       </div>
       {media.length > 0 ? (
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(96px,1fr))] gap-4 px-6 py-4">
-          {media.map((i, index) => {
-            const isSelected = selection[i.id]
+        <div className="px-6 py-4">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-ui-border-base text-left">
+                <th className="pb-3 pr-4 text-sm font-medium text-ui-fg-subtle w-[60px]"></th>
+                <th className="pb-3 pr-4 text-sm font-medium text-ui-fg-subtle w-[80px]">
+                  {t("products.media.thumbnail")}
+                </th>
+                <th className="pb-3 pr-4 text-sm font-medium text-ui-fg-subtle">
+                  {t("products.media.url")}
+                </th>
+                <th className="pb-3 pr-4 text-sm font-medium text-ui-fg-subtle">
+                  {t("products.media.altText")}
+                </th>
+                <th className="pb-3 text-sm font-medium text-ui-fg-subtle w-[60px]"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {media.map((i, index) => {
+                const isSelected = selection[i.id]
+                const imageData = product.images?.find((img) => img.id === i.id)
 
-            return (
-              <div
-                className="shadow-elevation-card-rest hover:shadow-elevation-card-hover transition-fg group relative aspect-square size-full cursor-pointer overflow-hidden rounded-[8px]"
-                key={i.id}
-              >
-                <div
-                  className={clx(
-                    "transition-fg invisible absolute right-2 top-2 opacity-0 group-hover:visible group-hover:opacity-100",
-                    {
-                      "visible opacity-100": isSelected,
-                    }
-                  )}
-                >
-                  <Checkbox
-                    checked={selection[i.id] || false}
-                    onCheckedChange={() => handleCheckedChange(i.id)}
-                  />
-                </div>
-                {i.isThumbnail && (
-                  <div className="absolute left-2 top-2">
-                    <Tooltip content={t("fields.thumbnail")}>
-                      <ThumbnailBadge />
-                    </Tooltip>
-                  </div>
-                )}
-                <Link to={`media`} state={{ curr: index }}>
-                  <img
-                    src={i.url}
-                    alt={`${product.title} image`}
-                    className="size-full object-cover"
-                  />
-                </Link>
-              </div>
-            )
-          })}
+                return (
+                  <tr
+                    key={i.id}
+                    className={clx(
+                      "border-b border-ui-border-base transition-fg hover:bg-ui-bg-subtle",
+                      {
+                        "bg-ui-bg-highlight": isSelected,
+                      }
+                    )}
+                  >
+                    <td className="py-3 pr-4">
+                      <Checkbox
+                        checked={selection[i.id] || false}
+                        onCheckedChange={() => handleCheckedChange(i.id)}
+                      />
+                    </td>
+                    <td className="py-3 pr-4">
+                      <div className="relative size-12 overflow-hidden rounded-[4px]">
+                        {i.isThumbnail && (
+                          <div className="absolute left-1 top-1 z-10">
+                            <Tooltip content={t("fields.thumbnail")}>
+                              <ThumbnailBadge />
+                            </Tooltip>
+                          </div>
+                        )}
+                        <Link to={`media`} state={{ curr: index }}>
+                          <img
+                            src={i.url}
+                            alt={imageData?.alt || `${product.title} image`}
+                            className="size-full object-cover"
+                          />
+                        </Link>
+                      </div>
+                    </td>
+                    <td className="py-3 pr-4">
+                      <Text size="small" className="text-ui-fg-subtle truncate max-w-[300px] block">
+                        {i.url}
+                      </Text>
+                    </td>
+                    <td className="py-3 pr-4">
+                      <Text size="small" className="text-ui-fg-subtle">
+                        {imageData?.alt || "-"}
+                      </Text>
+                    </td>
+                    <td className="py-3">
+                      <Tooltip content={t("actions.delete")}>
+                        <Button
+                          variant="transparent"
+                          size="small"
+                          onClick={() => {
+                            setSelection({ [i.id]: true })
+                            handleDelete()
+                          }}
+                          disabled={!i.id || i.id === "img_thumbnail"}
+                        >
+                          <Trash />
+                        </Button>
+                      </Tooltip>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-y-4 pb-8 pt-6">
