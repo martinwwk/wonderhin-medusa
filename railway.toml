@@ -4,13 +4,30 @@
 [[services]]
 name = "backend"
 rootDir = "backend"
-startCommand = "yarn start"
+startCommand = "yarn medusa start"
+healthcheckPath = "/health"
+healthcheckInterval = 30
 
   [services.variables]
     DATABASE_URL = "..."
     REDIS_URL = "..."
 
 [[services]]
+name = "admin"
+rootDir = "admin"
+startCommand = "yarn preview"
+healthcheckPath = "/"
+healthcheckInterval = 30
+
+  [services.variables]
+    MEDUSA_BACKEND_URL = "https://${BACKEND_SERVICE_NAME}.railway.app"
+
+[[services]]
 name = "storefront"
 rootDir = "storefront"
 startCommand = "yarn start"
+healthcheckPath = "/"
+healthcheckInterval = 30
+
+  [services.variables]
+    NEXT_PUBLIC_API_BASE_URL = "https://${BACKEND_SERVICE_NAME}.railway.app"

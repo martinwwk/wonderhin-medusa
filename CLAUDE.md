@@ -78,3 +78,10 @@ Wonderhin is a Next.js storefront based on a premium Themeforest template, custo
 
 ## Testing
 No test framework is currently configured.
+
+## Deployment
+See [docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md) for complete deployment instructions to Railway, including:
+- Railway project setup with PostgreSQL and Redis
+- Environment variable configuration
+- Database backup and restore procedures
+- Code change workflow after deployment

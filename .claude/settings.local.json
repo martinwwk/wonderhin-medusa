@@ -6,7 +6,9 @@
       "Bash(grep -r \"translation.batch\" node_modules/@medusajs/js-sdk/dist/*.d.ts 2>/dev/null | head -10)",
       "Bash(cd /Users/martinwang/git/merrymack/develop/wonderhin-medusa/admin && npm run build 2>&1 | grep -E \"localized-description|edit-product-form|product-create-general-section|product-create-form\" | head -20)",
       "Bash(npm run:*)",
-      "Bash(cd /Users/martinwang/git/merrymack/develop/wonderhin-medusa/admin && npx tsc --noEmit 2>&1 | head -50)"
+      "Bash(cd /Users/martinwang/git/merrymack/develop/wonderhin-medusa/admin && npx tsc --noEmit 2>&1 | head -50)",
+      "Bash(npx tsc:*)",
+      "Bash(ls -la /Users/martinwang/git/merrymack/develop/wonderhin-medusa/*.md 2>/dev/null || echo \"No md files in root\")"
     ]
   }
 }
