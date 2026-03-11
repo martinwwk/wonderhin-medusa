@@ -11,6 +11,7 @@ import { SectionRow } from "../../../../../components/common/section"
 import { useDeleteProduct } from "../../../../../hooks/api/products"
 import { useStore } from "../../../../../hooks/api/store"
 import { useReferenceTranslations } from "../../../../../hooks/api/translations"
+import { languages } from "../../../../../i18n/languages"
 import { useExtension } from "../../../../../providers/extension-provider"
 import { useFeatureFlag } from "../../../../../providers/feature-flag-provider"
 
@@ -51,19 +52,27 @@ export const ProductGeneralSection = ({
     enabled: isTranslationsEnabled,
   })
 
-  // Get available locales sorted with English first
+  // Get available locales sorted by languages.ts order
   const availableLocales = useMemo(() => {
     const locales = store?.supported_locales || []
-    const enLocale = locales.find((l: any) => (l.locale_code || l.code) === "en")
-    const otherLocales = locales.filter((l: any) => (l.locale_code || l.code) !== "en")
-    return enLocale ? [enLocale, ...otherLocales] : otherLocales
+    const normalize = (c: string) => c.toLowerCase().replace(/[-_]/g, "")
+    return [...locales].sort((a: any, b: any) => {
+      const codeA = a.locale_code || a.code
+      const codeB = b.locale_code || b.code
+      const idxA = languages.findIndex((l) => normalize(l.code) === normalize(codeA))
+      const idxB = languages.findIndex((l) => normalize(l.code) === normalize(codeB))
+      const orderA = idxA === -1 ? Infinity : idxA
+      const orderB = idxB === -1 ? Infinity : idxB
+      return orderA - orderB
+    })
   }, [store])
 
-  // Get locale display name - use locale.locale.name for proper display
+  // Get locale display name from languages registry
   const getLocaleName = (locale: any) => {
     const code = locale.locale_code || locale.code
-    // Try locale.locale.name first (Medusa structure), then fallback to locale.name
-    return locale.locale?.name || locale.name || (code === "en" ? "English" : code.toUpperCase())
+    const normalize = (c: string) => c.toLowerCase().replace(/[-_]/g, "")
+    const lang = languages.find((l) => normalize(l.code) === normalize(code))
+    return lang?.display_name || (code === "en" ? "English" : code.toUpperCase())
   }
 
   // Get translations map for current product

@@ -3,7 +3,8 @@ import { useTranslation } from "react-i18next"
 import { useParams, useSearchParams } from "react-router-dom"
 
 import { RouteDrawer } from "../../../components/modals"
-import { useProduct, useStore } from "../../../hooks/api"
+import { useProduct } from "../../../hooks/api"
+import { languages } from "../../../i18n/languages"
 import { EditProductForm } from "./components/edit-product-form"
 
 export const ProductEdit = () => {
@@ -11,15 +12,13 @@ export const ProductEdit = () => {
   const [searchParams] = useSearchParams()
   const locale = searchParams.get("locale") || "en"
   const { t } = useTranslation()
-  const { store } = useStore()
 
-  // Get locale display name
+  // Get locale display name from languages registry
   const localeName = (() => {
     if (locale === "en") return "English"
-    const storeLocale = store?.supported_locales?.find(
-      (l: any) => (l.locale_code || l.code) === locale
-    )
-    return (storeLocale as any)?.name || locale.toUpperCase()
+    const normalize = (c: string) => c.toLowerCase().replace(/[-_]/g, "")
+    const lang = languages.find((l) => normalize(l.code) === normalize(locale))
+    return lang?.display_name || locale.toUpperCase()
   })()
 
   const { product, isLoading, isError, error } = useProduct(id!, {

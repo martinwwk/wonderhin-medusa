@@ -361,7 +361,7 @@ export const EditProductForm = ({ product, locale = "en" }: EditProductFormProps
                   return (
                     <Form.Item>
                       <Form.Label optional>
-                        {t("fields.description")} ({localeName})
+                        {t("fields.description")}
                       </Form.Label>
                       <Form.Control>
                         <Textarea {...field} />

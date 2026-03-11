@@ -161,6 +161,12 @@ export const languages: Language[] = [
   //   date_locale: ar,
   // },
   {
+    code: "zhTW",
+    display_name: "繁體中文(臺灣)",
+    ltr: true,
+    date_locale: zhTW,
+  },  
+  {
     code: "zhCN",
     display_name: "简体中文",
     ltr: true,
@@ -214,10 +220,5 @@ export const languages: Language[] = [
   //   ltr: true,
   //   date_locale: nl,
   // },
-  {
-    code: "zhTW",
-    display_name: "繁體中文(臺灣)",
-    ltr: true,
-    date_locale: zhTW,
-  },
+
 ]

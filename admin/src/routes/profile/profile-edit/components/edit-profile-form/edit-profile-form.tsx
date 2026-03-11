@@ -42,9 +42,7 @@ export const EditProfileForm = ({ user }: EditProfileProps) => {
     await i18n.changeLanguage(code)
   }
 
-  const sortedLanguages = languages.sort((a, b) =>
-    a.display_name.localeCompare(b.display_name)
-  )
+  const sortedLanguages = languages
 
   const { mutateAsync, isPending } = useUpdateUser(user.id!)
 
