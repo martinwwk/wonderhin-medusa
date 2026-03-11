@@ -9,8 +9,10 @@ import { useFeatureFlag } from "../../../../../providers/feature-flag-provider"
 
 export const CollectionRowActions = ({
   collection,
+  activeLocale = "en",
 }: {
   collection: HttpTypes.AdminCollection
+  activeLocale?: string
 }) => {
   const { t } = useTranslation()
   const prompt = usePrompt()
@@ -44,7 +46,7 @@ export const CollectionRowActions = ({
           actions: [
             {
               label: t("actions.edit"),
-              to: `/collections/${collection.id}/edit`,
+              to: `/collections/${collection.id}/edit?locale=${activeLocale}`,
               icon: <PencilSquare />,
             },
           ],

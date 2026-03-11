@@ -25,13 +25,35 @@ import { HttpTypes } from "@medusajs/types"
 
 const columnHelper = createColumnHelper<HttpTypes.AdminProduct>()
 
-export const useProductTableColumns = () => {
+export const useProductTableColumns = (
+  activeLocale: string = "en",
+  localeLookupKey?: string,
+  translationsMap?: Record<string, Record<string, Record<string, string>>>
+) => {
+  // Helper to get translated title for a product - exact match only
+  const getTranslatedTitle = (product: HttpTypes.AdminProduct) => {
+    if (activeLocale === "en" || !translationsMap || !localeLookupKey) {
+      return product.title
+    }
+
+    // Only use exact match - if no translation found, return default (product.title)
+    const translation = translationsMap[product.id]?.[localeLookupKey]
+    if (translation?.title) {
+      return translation.title
+    }
+
+    return product.title
+  }
+
   return useMemo(
     () => [
       columnHelper.display({
         id: "product",
         header: () => <ProductHeader />,
-        cell: ({ row }) => <ProductCell product={row.original} />,
+        cell: ({ row }) => {
+          const translatedTitle = getTranslatedTitle(row.original)
+          return <ProductCell product={row.original} translatedTitle={translatedTitle} />
+        },
       }),
       columnHelper.accessor("collection", {
         header: () => <CollectionHeader />,
@@ -54,6 +76,6 @@ export const useProductTableColumns = () => {
         cell: ({ row }) => <ProductStatusCell status={row.original.status} />,
       }),
     ],
-    []
+    [activeLocale, localeLookupKey, translationsMap]
   )
 }
