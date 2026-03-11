@@ -17,6 +17,13 @@ import {
 } from "../../../../../components/modals"
 import { KeyboundForm } from "../../../../../components/utilities/keybound-form"
 import { useBatchTranslations } from "../../../../../hooks/api/translations"
+import { languages } from "../../../../../i18n/languages"
+
+const normalizeCode = (c: string) => c.toLowerCase().replace(/[-_]/g, "")
+const getLocaleDisplayName = (localeCode: string) => {
+  const lang = languages.find((l) => normalizeCode(l.code) === normalizeCode(localeCode))
+  return lang?.display_name ?? localeCode.toUpperCase()
+}
 
 const EntityTranslationsSchema = z.object({
   id: z.string().nullish(),
@@ -190,7 +197,7 @@ const columnHelper = createDataGridHelper<
   TranslationsFormSchema
 >()
 
-const FIELD_COLUMN_WIDTH = 350
+const FIELD_COLUMN_DEFAULT_WIDTH = 350
 
 function buildTranslationRows(
   references: { id: string; [key: string]: string }[],
@@ -212,11 +219,13 @@ function useTranslationsGridColumns({
   availableLocales,
   selectedLocale,
   dynamicColumnWidth,
+  fieldColumnWidth,
 }: {
   entities: { id: string; [key: string]: string }[]
   availableLocales: AdminStoreLocale[]
   selectedLocale: string
   dynamicColumnWidth: number
+  fieldColumnWidth: number
 }) {
   const { t } = useTranslation()
 
@@ -229,7 +238,7 @@ function useTranslationsGridColumns({
       columnHelper.column({
         id: "field",
         name: "field",
-        size: FIELD_COLUMN_WIDTH,
+        size: fieldColumnWidth,
         header: undefined,
         cell: (context) => {
           const row = context.row.original
@@ -293,11 +302,11 @@ function useTranslationsGridColumns({
       columns.push(
         columnHelper.column({
           id: selectedLocaleData.locale_code,
-          name: selectedLocaleData.locale.name,
+          name: getLocaleDisplayName(selectedLocaleData.locale_code),
           size: dynamicColumnWidth,
           header: () => (
             <Text className="text-ui-fg-base" weight="plus" size="small">
-              {selectedLocaleData.locale.name}
+              {getLocaleDisplayName(selectedLocaleData.locale_code)}
             </Text>
           ),
           cell: (context) => {
@@ -355,13 +364,16 @@ export const TranslationsEditForm = ({
 
   const containerRef = useRef<HTMLDivElement>(null)
   const [dynamicColumnWidth, setDynamicColumnWidth] = useState(400)
+  const [fieldColumnWidth, setFieldColumnWidth] = useState(FIELD_COLUMN_DEFAULT_WIDTH)
 
   useEffect(() => {
     const calculateColumnWidth = () => {
       if (containerRef.current) {
         const containerWidth = containerRef.current.offsetWidth
-        const availableWidth = containerWidth - FIELD_COLUMN_WIDTH - 16
-        const columnWidth = Math.max(300, Math.floor(availableWidth / 2))
+        const fieldWidth = Math.min(FIELD_COLUMN_DEFAULT_WIDTH, Math.floor(containerWidth / 2))
+        setFieldColumnWidth(fieldWidth)
+        const availableWidth = containerWidth - fieldWidth - 16
+        const columnWidth = Math.max(200, Math.floor(availableWidth / 2))
         setDynamicColumnWidth(columnWidth)
       }
     }
@@ -452,10 +464,8 @@ export const TranslationsEditForm = ({
   )
 
   const selectedLocaleDisplay = useMemo(
-    () =>
-      availableLocales.find((l) => l.locale_code === selectedLocale)?.locale
-        .name,
-    [availableLocales, selectedLocale]
+    () => getLocaleDisplayName(selectedLocale),
+    [selectedLocale]
   )
 
   const columns = useTranslationsGridColumns({
@@ -463,6 +473,7 @@ export const TranslationsEditForm = ({
     availableLocales,
     selectedLocale,
     dynamicColumnWidth,
+    fieldColumnWidth,
   })
 
   const { mutateAsync, isPending, invalidateQueries } =
@@ -675,7 +686,7 @@ export const TranslationsEditForm = ({
                         key={locale.locale_code}
                         value={locale.locale_code}
                       >
-                        {locale.locale.name}
+                        {getLocaleDisplayName(locale.locale_code)}
                       </Select.Item>
                     ))}
                   </Select.Content>
