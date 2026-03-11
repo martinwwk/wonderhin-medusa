@@ -3,6 +3,7 @@ import { Button, Divider, Heading, Input, Switch, toast } from "@medusajs/ui"
 import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
+import { useMemo } from "react"
 
 import { HttpTypes } from "@medusajs/types"
 import { Form } from "../../../../../components/common/form"
@@ -16,10 +17,14 @@ import {
   transformNullableFormNumber,
 } from "../../../../../lib/form-helpers"
 import { optionalInt } from "../../../../../lib/validation"
+import { useStore, useReferenceTranslations, useBatchTranslations } from "../../../../../hooks/api"
+import { queryClient } from "../../../../../lib/query-client"
+import { translationEntitiesQueryKeys } from "../../../../../hooks/api/translations"
 
 type ProductEditVariantFormProps = {
   product: HttpTypes.AdminProduct
   variant: HttpTypes.AdminProductVariant
+  locale?: string
 }
 
 const ProductEditVariantSchema = z.object({
@@ -45,9 +50,63 @@ const ProductEditVariantSchema = z.object({
 export const ProductEditVariantForm = ({
   variant,
   product,
+  locale = "en",
 }: ProductEditVariantFormProps) => {
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
+
+  // Fetch store locales
+  const { store } = useStore()
+
+  // Get locale name for display
+  const localeName = useMemo(() => {
+    if (locale === "en") return "English"
+    const storeLocale = store?.supported_locales?.find((l: any) => (l.locale_code || l.code) === locale)
+    return (storeLocale as any)?.name || locale.toUpperCase()
+  }, [store, locale])
+
+  // Fetch existing translations for this variant
+  const { translations: existingTranslations } = useReferenceTranslations(
+    "product_variant",
+    variant.id,
+    {
+      enabled: locale !== "en",
+    }
+  )
+
+  // Build translations map for current variant
+  const translationsMap = useMemo(() => {
+    if (!existingTranslations) return {}
+    const map: Record<string, Record<string, string>> = {}
+    existingTranslations.forEach((tr: any) => {
+      const trLocale = tr.locale_code
+      if (!map[trLocale]) map[trLocale] = {}
+      if (tr.translations) {
+        map[trLocale] = {
+          ...map[trLocale],
+          ...tr.translations,
+        }
+      }
+    })
+    return map
+  }, [existingTranslations])
+
+  // Get title for the current locale
+  const titleForLocale = useMemo(() => {
+    if (locale === "en") {
+      return variant.title || ""
+    }
+    return translationsMap[locale]?.title || variant.title || ""
+  }, [variant.title, translationsMap, locale])
+
+  // Get material for the current locale
+  const materialForLocale = useMemo(() => {
+    if (locale === "en") {
+      return variant.material || ""
+    }
+    return translationsMap[locale]?.material || variant.material || ""
+  }, [variant.material, translationsMap, locale])
+
   const defaultOptions = product.options?.reduce((acc: any, option: any) => {
     const varOpt = variant.options?.find((o: any) => o.option_id === option.id)
     acc[option.title] = varOpt?.value
@@ -56,8 +115,8 @@ export const ProductEditVariantForm = ({
 
   const form = useForm<z.infer<typeof ProductEditVariantSchema>>({
     defaultValues: {
-      title: variant.title || "",
-      material: variant.material || "",
+      title: titleForLocale,
+      material: materialForLocale,
       sku: variant.sku || "",
       ean: variant.ean || "",
       upc: variant.upc || "",
@@ -80,10 +139,12 @@ export const ProductEditVariantForm = ({
     variant.product_id!,
     variant.id
   )
+  const batchTranslations = useBatchTranslations("product_variant")
 
   const handleSubmit = form.handleSubmit(async (data) => {
     const {
       title,
+      material,
       weight,
       height,
       width,
@@ -96,29 +157,100 @@ export const ProductEditVariantForm = ({
 
     const nullableData = transformNullableFormData(optional)
 
-    await mutateAsync(
-      {
-        id: variant.id,
-        weight: transformNullableFormNumber(weight),
-        height: transformNullableFormNumber(height),
-        width: transformNullableFormNumber(width),
-        length: transformNullableFormNumber(length),
-        title,
-        allow_backorder,
-        manage_inventory,
-        options,
-        ...nullableData,
-      },
-      {
-        onSuccess: () => {
-          handleSuccess("../")
-          toast.success(t("products.variant.edit.success"))
+    if (locale === "en") {
+      // For English, save directly to variant
+      await mutateAsync(
+        {
+          id: variant.id,
+          weight: transformNullableFormNumber(weight),
+          height: transformNullableFormNumber(height),
+          width: transformNullableFormNumber(width),
+          length: transformNullableFormNumber(length),
+          title,
+          material,
+          allow_backorder,
+          manage_inventory,
+          options,
+          ...nullableData,
         },
-        onError: (error) => {
-          toast.error(error.message)
+        {
+          onSuccess: () => {
+            handleSuccess("../")
+            toast.success(t("products.variant.edit.success"))
+          },
+          onError: (error) => {
+            toast.error(error.message)
+          },
+        }
+      )
+    } else {
+      // For other locales, save base variant data first, then save translations
+      await mutateAsync(
+        {
+          id: variant.id,
+          weight: transformNullableFormNumber(weight),
+          height: transformNullableFormNumber(height),
+          width: transformNullableFormNumber(width),
+          length: transformNullableFormNumber(length),
+          // Keep original English title
+          title: variant.title,
+          // Keep original English material
+          material: variant.material,
+          allow_backorder,
+          manage_inventory,
+          options,
+          ...nullableData,
         },
-      }
-    )
+        {
+          onSuccess: async () => {
+            // Save translations for this locale
+            const translationsPayload: Record<string, string> = {}
+            if (title) translationsPayload.title = title
+            if (material) translationsPayload.material = material
+
+            // Check if translation already exists
+            const existingTranslation = existingTranslations?.find(
+              (tr: any) => tr.locale_code === locale
+            )
+
+            if (existingTranslation?.id) {
+              // Update existing translation
+              await batchTranslations.mutateAsync({
+                update: [
+                  {
+                    id: existingTranslation.id,
+                    translations: translationsPayload,
+                  },
+                ],
+              })
+            } else {
+              // Create new translation
+              await batchTranslations.mutateAsync({
+                create: [
+                  {
+                    reference_id: variant.id,
+                    reference: "product_variant",
+                    locale_code: locale,
+                    translations: translationsPayload,
+                  },
+                ],
+              })
+            }
+
+            // Invalidate translations queries to refetch updated data
+            queryClient.invalidateQueries({
+              queryKey: translationEntitiesQueryKeys.list({ type: "product_variant", id: variant.id }),
+            })
+
+            handleSuccess("../")
+            toast.success(t("products.variant.edit.success"))
+          },
+          onError: (error) => {
+            toast.error(error.message)
+          },
+        }
+      )
+    }
   })
 
   return (
@@ -144,6 +276,11 @@ export const ProductEditVariantForm = ({
                 )
               }}
             />
+            {locale !== "en" && (
+              <div className="text-ui-fg-subtle bg-ui-bg-subtle border-ui-border-base rounded-md px-3 py-2 text-sm">
+                {t("products.variant.edit.hint", { locale: localeName })}
+              </div>
+            )}
             <Form.Field
               control={form.control}
               name="material"

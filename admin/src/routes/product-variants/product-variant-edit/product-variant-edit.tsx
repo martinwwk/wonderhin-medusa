@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next"
 import { useLoaderData, useParams, useSearchParams } from "react-router-dom"
 import { RouteDrawer } from "../../../components/modals"
 import { useProduct, useProductVariant } from "../../../hooks/api/products"
+import { languages } from "../../../i18n/languages"
 import { ProductEditVariantForm } from "./components/product-edit-variant-form"
 import { editProductVariantLoader } from "./loader"
 
@@ -15,6 +16,15 @@ export const ProductVariantEdit = () => {
   const { id, variant_id } = useParams()
   const [URLSearchParms] = useSearchParams()
   const searchVariantId = URLSearchParms.get("variant_id")
+  const locale = URLSearchParms.get("locale") || "en"
+
+  // Get locale display name from languages registry
+  const localeName = (() => {
+    if (locale === "en") return "English"
+    const normalize = (c: string) => c.toLowerCase().replace(/[-_]/g, "")
+    const lang = languages.find((l) => normalize(l.code) === normalize(locale))
+    return lang?.display_name || locale.toUpperCase()
+  })()
 
   const { variant, isPending, isError, error } = useProductVariant(
     id!,
@@ -54,9 +64,13 @@ export const ProductVariantEdit = () => {
   return (
     <RouteDrawer>
       <RouteDrawer.Header>
-        <Heading>{t("products.variant.edit.header")}</Heading>
+        <Heading>
+          {locale === "en"
+            ? t("products.variant.edit.header")
+            : `${t("products.variant.edit.header")} (${localeName})`}
+        </Heading>
       </RouteDrawer.Header>
-      {ready && <ProductEditVariantForm variant={variant} product={product} />}
+      {ready && <ProductEditVariantForm variant={variant} product={product} locale={locale} />}
     </RouteDrawer>
   )
 }

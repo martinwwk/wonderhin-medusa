@@ -17,8 +17,9 @@ import {
   Tooltip,
   usePrompt,
 } from "@medusajs/ui"
+import * as Tabs from "@radix-ui/react-tabs"
 import { keepPreviousData } from "@tanstack/react-query"
-import { useCallback, useMemo } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { CellContext } from "@tanstack/react-table"
@@ -33,6 +34,9 @@ import { useQueryParams } from "../../../../../hooks/use-query-params"
 import { PRODUCT_VARIANT_IDS_KEY } from "../../../common/constants"
 import { Thumbnail } from "../../../../../components/common/thumbnail"
 import { useFeatureFlag } from "../../../../../providers/feature-flag-provider"
+import { useReferenceTranslations } from "../../../../../hooks/api/translations"
+import { useStore } from "../../../../../hooks/api/store"
+import { languages } from "../../../../../i18n/languages"
 
 type ProductVariantSectionProps = {
   product: HttpTypes.AdminProduct
@@ -46,16 +50,16 @@ export const ProductVariantSection = ({
 }: ProductVariantSectionProps) => {
   const { t } = useTranslation()
   const isTranslationsEnabled = useFeatureFlag("translation")
+  const [activeLocale, setActiveLocale] = useState("en")
+
+  // Fetch store locales
+  const { store } = useStore()
 
   const { q, order, offset, allow_backorder, manage_inventory } =
     useQueryParams(
       ["q", "order", "offset", "manage_inventory", "allow_backorder"],
       PREFIX
     )
-
-  const columns = useColumns(product)
-  const filters = useFilters()
-  const commands = useCommands()
 
   const { variants, count, isPending, isError, error } = useProductVariants(
     product.id,
@@ -78,6 +82,64 @@ export const ProductVariantSection = ({
     }
   )
 
+  // Get variant IDs for translation queries
+  const variantIds = variants?.map((v) => v.id) || []
+
+  // Fetch translations for all variants in the list
+  const { translations } = useReferenceTranslations(
+    "product_variant",
+    variantIds,
+    {
+      enabled: isTranslationsEnabled && variantIds.length > 0,
+    }
+  )
+
+  // Get available locales sorted by languages.ts order
+  const availableLocales = useMemo(() => {
+    const locales = store?.supported_locales || []
+    const normalize = (c: string) => c.toLowerCase().replace(/[-_]/g, "")
+    return [...locales].sort((a: any, b: any) => {
+      const codeA = a.locale_code || a.code
+      const codeB = b.locale_code || b.code
+      const idxA = languages.findIndex((l) => normalize(l.code) === normalize(codeA))
+      const idxB = languages.findIndex((l) => normalize(l.code) === normalize(codeB))
+      const orderA = idxA === -1 ? Infinity : idxA
+      const orderB = idxB === -1 ? Infinity : idxB
+      return orderA - orderB
+    })
+  }, [store])
+
+  // Get locale display name from languages registry
+  const getLocaleName = (locale: any) => {
+    const code = locale.locale_code || locale.code
+    const normalize = (c: string) => c.toLowerCase().replace(/[-_]/g, "")
+    const lang = languages.find((l) => normalize(l.code) === normalize(code))
+    return lang?.display_name || (code === "en" ? "English" : code.toUpperCase())
+  }
+
+  // Build translations map keyed by variant id and locale
+  const translationsMap = useMemo(() => {
+    if (!translations) return {}
+    const map: Record<string, Record<string, string>> = {}
+    translations.forEach((tr: any) => {
+      const refId = tr.reference_id
+      const locale = tr.locale_code
+      if (!map[refId]) map[refId] = {}
+      if (tr.translations) {
+        map[refId][locale] = {
+          ...map[refId][locale],
+          ...tr.translations,
+        }
+      }
+    })
+    return map
+  }, [translations])
+
+  // Now we can call useColumns with translationsMap defined
+  const columns = useColumns(product, activeLocale, translationsMap)
+  const filters = useFilters()
+  const commands = useCommands()
+
   const translationParams = new URLSearchParams()
   variants?.forEach((variant) => {
     translationParams.append("reference_id", variant.id)
@@ -89,6 +151,31 @@ export const ProductVariantSection = ({
 
   return (
     <Container className="divide-y p-0">
+      {/* Language Tabs - at the top */}
+      {isTranslationsEnabled && (
+        <Tabs.Root value={activeLocale} onValueChange={setActiveLocale}>
+          <Tabs.List className="flex px-6 border-b border-ui-border-base">
+            <Tabs.Trigger
+              key="en"
+              value="en"
+              className="-mb-px border-b-2 border-transparent pb-3 pt-4 text-sm font-medium text-ui-fg-subtle hover:text-ui-fg-base data-[state=active]:border-ui-fg-base data-[state=active]:text-ui-fg-base mr-4 outline-none"
+            >
+              English
+            </Tabs.Trigger>
+            {availableLocales
+              .filter((locale: any) => (locale.locale_code || locale.code) !== "en")
+              .map((locale: any) => (
+                <Tabs.Trigger
+                  key={locale.locale_code || locale.code}
+                  value={locale.locale_code || locale.code}
+                  className="-mb-px border-b-2 border-transparent pb-3 pt-4 text-sm font-medium text-ui-fg-subtle hover:text-ui-fg-base data-[state=active]:border-ui-fg-base data-[state=active]:text-ui-fg-base mr-4 outline-none"
+                >
+                  {getLocaleName(locale)}
+                </Tabs.Trigger>
+              ))}
+          </Tabs.List>
+        </Tabs.Root>
+      )}
       <DataTable
         data={variants}
         columns={columns}
@@ -151,12 +238,32 @@ export const ProductVariantSection = ({
 const columnHelper =
   createDataTableColumnHelper<HttpTypes.AdminProductVariant>()
 
-const useColumns = (product: HttpTypes.AdminProduct) => {
+const useColumns = (
+  product: HttpTypes.AdminProduct,
+  activeLocale: string,
+  translationsMap?: Record<string, Record<string, Record<string, string>>>
+) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { mutateAsync } = useDeleteVariantLazy(product.id)
   const prompt = usePrompt()
   const [searchParams] = useSearchParams()
+
+  // Helper to get translated title for a variant
+  const getTranslatedTitle = (variant: HttpTypes.AdminProductVariant) => {
+    if (activeLocale === "en" || !translationsMap) {
+      return variant.title
+    }
+    return translationsMap[variant.id]?.[activeLocale]?.title || variant.title
+  }
+
+  // Helper to get translated material for a variant
+  const getTranslatedMaterial = (variant: HttpTypes.AdminProductVariant) => {
+    if (activeLocale === "en" || !translationsMap) {
+      return variant.material
+    }
+    return translationsMap[variant.id]?.[activeLocale]?.material || variant.material || ""
+  }
 
   const tableSearchParams = useMemo(() => {
     const filtered = new URLSearchParams()
@@ -238,7 +345,7 @@ const useColumns = (product: HttpTypes.AdminProduct) => {
             navigate(
               `edit-variant?variant_id=${
                 row.row.original.id
-              }&${tableSearchParams.toString()}`,
+              }&locale=${activeLocale}&${tableSearchParams.toString()}`,
               {
                 state: {
                   restore_params: tableSearchParams.toString(),
@@ -309,7 +416,7 @@ const useColumns = (product: HttpTypes.AdminProduct) => {
 
       return [mainActions, secondaryActions]
     },
-    [handleDelete, navigate, t, tableSearchParams]
+    [handleDelete, navigate, t, tableSearchParams, activeLocale]
   )
 
   const getInventory = useCallback(
@@ -373,11 +480,23 @@ const useColumns = (product: HttpTypes.AdminProduct) => {
           )
         },
       }),
-      columnHelper.accessor("title", {
+      columnHelper.display({
+        id: "title",
         header: t("fields.title"),
         enableSorting: true,
         sortAscLabel: t("filters.sorting.alphabeticallyAsc"),
         sortDescLabel: t("filters.sorting.alphabeticallyDesc"),
+        cell: ({ row }) => {
+          return getTranslatedTitle(row.original)
+        },
+      }),
+      columnHelper.display({
+        id: "material",
+        header: t("fields.material"),
+        cell: ({ row }) => {
+          const material = getTranslatedMaterial(row.original)
+          return material || "-"
+        },
       }),
       columnHelper.accessor("sku", {
         header: t("fields.sku"),

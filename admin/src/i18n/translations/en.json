@@ -668,7 +668,8 @@
     "variant": {
       "edit": {
         "header": "Edit Variant",
-        "success": "Product variant edited successfully"
+        "success": "Product variant edited successfully",
+        "hint": "Editing {{locale}} translation. Base title and material are from English."
       },
       "create": {
         "header": "Variant details"
@@ -771,6 +772,10 @@
     "createCollectionHint": "Create a new collection to organize your products.",
     "createSuccess": "Collection created successfully.",
     "editCollection": "Edit Collection",
+    "edit": {
+      "successToast": "Collection {{title}} was successfully updated.",
+      "hint": "Editing {{locale}} translation. Base title is from English."
+    },
     "handleTooltip": "The handle is used to reference the collection in your storefront. If not specified, the handle will be generated from the collection title.",
     "deleteWarning": "You are about to delete the collection {{title}}. This action cannot be undone.",
     "removeSingleProductWarning": "You are about to remove the product {{title}} from the collection. This action cannot be undone.",
@@ -805,7 +810,8 @@
     "edit": {
       "header": "Edit Category",
       "description": "Edit the category to update its details.",
-      "successToast": "Category was successfully updated."
+      "successToast": "Category was successfully updated.",
+      "hint": "Editing {{locale}} translation. Base name is from English."
     },
     "delete": {
       "confirmation": "You are about to delete the category {{name}}. This action cannot be undone.",
