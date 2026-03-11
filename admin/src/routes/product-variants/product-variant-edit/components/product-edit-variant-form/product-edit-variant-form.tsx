@@ -276,11 +276,6 @@ export const ProductEditVariantForm = ({
                 )
               }}
             />
-            {locale !== "en" && (
-              <div className="text-ui-fg-subtle bg-ui-bg-subtle border-ui-border-base rounded-md px-3 py-2 text-sm">
-                {t("products.variant.edit.hint", { locale: localeName })}
-              </div>
-            )}
             <Form.Field
               control={form.control}
               name="material"
