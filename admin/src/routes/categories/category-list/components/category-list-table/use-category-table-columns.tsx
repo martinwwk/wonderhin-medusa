@@ -19,8 +19,27 @@ import {
 const columnHelper =
   createColumnHelper<AdminProductCategoryResponse["product_category"]>()
 
-export const useCategoryTableColumns = () => {
+export const useCategoryTableColumns = (
+  activeLocale: string = "en",
+  localeLookupKey?: string,
+  translationsMap?: Record<string, Record<string, Record<string, string>>>
+) => {
   const { t } = useTranslation()
+
+  // Helper to get translated name for a category - exact match only
+  const getTranslatedName = (category: AdminProductCategoryResponse["product_category"]) => {
+    if (activeLocale === "en" || !translationsMap || !localeLookupKey) {
+      return category.name
+    }
+
+    // Only use exact match - if no translation found, return default (category.name)
+    const translation = translationsMap[category.id]?.[localeLookupKey]
+    if (translation?.name) {
+      return translation.name
+    }
+
+    return category.name
+  }
 
   return useMemo(
     () => [
@@ -28,33 +47,39 @@ export const useCategoryTableColumns = () => {
         header: () => <TextHeader text={t("fields.name")} />,
         cell: ({ getValue, row }) => {
           const expandHandler = row.getToggleExpandedHandler()
+          const category = row.original
 
           if (row.original.parent_category !== undefined) {
             const path = getCategoryPath(row.original)
 
             return (
               <div className="flex size-full items-center gap-1 overflow-hidden">
-                {path.map((chip, index) => (
-                  <div
-                    key={chip.id}
-                    className={clx("overflow-hidden", {
-                      "text-ui-fg-muted flex items-center gap-x-1":
-                        index !== path.length - 1,
-                    })}
-                  >
-                    <Text size="small" leading="compact" className="truncate">
-                      {chip.name}
-                    </Text>
-                    {index !== path.length - 1 && (
-                      <Text size="small" leading="compact">
-                        /
+                {path.map((chip, index) => {
+                  const translatedName = getTranslatedName(chip)
+                  return (
+                    <div
+                      key={chip.id}
+                      className={clx("overflow-hidden", {
+                        "text-ui-fg-muted flex items-center gap-x-1":
+                          index !== path.length - 1,
+                      })}
+                    >
+                      <Text size="small" leading="compact" className="truncate">
+                        {translatedName}
                       </Text>
-                    )}
-                  </div>
-                ))}
+                      {index !== path.length - 1 && (
+                        <Text size="small" leading="compact">
+                          /
+                        </Text>
+                      )}
+                    </div>
+                  )
+                })}
               </div>
             )
           }
+
+          const translatedName = getTranslatedName(category)
 
           return (
             <div className="flex size-full items-center gap-x-3 overflow-hidden">
@@ -81,7 +106,7 @@ export const useCategoryTableColumns = () => {
                   </IconButton>
                 ) : null}
               </div>
-              <span className="truncate">{getValue()}</span>
+              <span className="truncate">{translatedName}</span>
             </div>
           )
         },
@@ -111,6 +136,6 @@ export const useCategoryTableColumns = () => {
         },
       }),
     ],
-    [t]
+    [t, activeLocale, localeLookupKey, translationsMap]
   )
 }
